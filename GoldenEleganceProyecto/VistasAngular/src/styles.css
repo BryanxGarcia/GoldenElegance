@@ -1,0 +1,9 @@
+html {
+    box-sizing: border-box;
+    margin-inline-end: 0;
+    padding: 0;
+    margin-top: none;
+    margin-left: none;
+    margin-right: none;
+    margin-block-end: none;
+}

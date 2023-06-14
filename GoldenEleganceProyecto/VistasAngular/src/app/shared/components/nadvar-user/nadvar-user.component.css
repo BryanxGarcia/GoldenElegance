@@ -1,0 +1,56 @@
+
+
+.navi {
+    font-family: "Montserrat", sans-serif;
+    display: flex;
+    width: 100%;
+    height: 70px;
+    align-items: center;
+    justify-content: space-around;
+    background-color: #222;
+    top: 0;
+    position: fixed;
+    left: 0;
+    right: 0;
+    text-align: center;
+    z-index: 2;
+}
+
+    .navi ul {
+        display: flex;
+        gap: 40px;
+    }
+
+    .navi ul,
+    li
+     {
+        color: white;
+        text-decoration: none;
+        list-style: none;
+        text-transform: uppercase;
+        letter-spacing: 15px;
+        font-size: 12px;
+        transition: ease-in-out .4s;
+    }
+
+    .navi h1 {
+        text-transform: uppercase;
+        color: white;
+    }
+
+.nava {
+    color: white;
+    text-decoration: none;
+    list-style: none;
+    text-transform: uppercase;
+    letter-spacing: 15px;
+    font-size: 12px;
+    transition: ease-in-out .4s;
+}
+    .nava:hover {
+        color: yellow;
+    }
+    .navi ul,
+    li {
+        color: yellow;
+    }
