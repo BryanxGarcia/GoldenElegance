@@ -1,0 +1,41 @@
+<app-header></app-header>
+<div class="contenedores">
+        <h2 >Empieza a realizar tus compras</h2>
+        <div [ngClass]="claseDiv" id="container">
+            <div class="form-container sign-up-container">
+                <form [formGroup]="kt_form">
+                    <h1>Crear Cuenta</h1>
+                    <span>O usa tu email para suscribirte</span>
+                    <input formControlName="Nombre" type="text" placeholder="Nombre" />
+                    <input formControlName="Username" type="text" placeholder="Username" />
+                    <input formControlName="Correo" type="email" placeholder="Email" />
+                    <input formControlName="Password" type="password" placeholder="Password" />
+                    <button (click)="onSingUp()" type="submit">Registrarse</button>
+                </form>
+            </div>
+            <div class="form-container sign-in-container">
+                <form [formGroup]="loginForm" >
+                    <h1>Inicia sesión</h1>
+                    <span>o usa tu cuenta</span>
+                    <input name="email" formControlName="Correo" type="email" placeholder="Email" />
+                    <input name="Pass" formControlName="Password" type="password" placeholder="Password" />
+                    <a class="ases" href="#">¿Olvidaste tu contraseña?</a>
+                    <button (click)="onLogin()" type="submit" >Iniciar sesion</button>
+                </form>
+            </div>
+            <div class="overlay-container">
+                <div class="overlay" >
+                    <div class="overlay-panel overlay-left">
+                        <h1>Bienvenido!</h1>
+                        <p>Conectate para mantenerte al dia con los nuevos productos</p>
+                        <button class="ghost" id="signIn" (click)="eliminar()">Iniciar sesion</button>
+                    </div>
+                    <div class="overlay-panel overlay-right">
+                        <h1>Hola ¡Bienvenido!</h1>
+                        <p>Ingresa tus datos personales</p>
+                        <button class="ghost" id="signUp" (click)="cambiar()">Registrate</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
