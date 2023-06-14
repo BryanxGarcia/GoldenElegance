@@ -11,8 +11,6 @@ namespace GoldenEleganceProyecto.Service.IServices
 
         Task<ResponseHelper> LoginUsuario(Usuarios usuario);
 
-        Task<ResponseHelper> LogoutUsuario(bool isLogout);
-
         Task<ResponseHelper> ResetPassword(string correo);
 
     }
