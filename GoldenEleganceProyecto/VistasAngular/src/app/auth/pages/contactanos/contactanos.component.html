@@ -1,0 +1,36 @@
+<app-header></app-header>
+<div class="maxcontainer">
+  <div class="container">
+    <div class="row">
+      <h1>Contactanos</h1>
+    </div>
+    <form  [formGroup]="kt_form" class="row input-container">
+      <div class="col-xs-12">
+        <div class="styled-input wide">
+          <input formControlName="Nombre"  type="text" required />
+          <label>Nombre:</label>
+        </div>
+      </div>
+      <div class="col-md-6 col-sm-12">
+        <div class="styled-input">
+          <input formControlName="Correo" type="text" required />
+          <label>Correo electronico:</label>
+        </div>
+      </div>
+      <div class="col-md-6 col-sm-12">
+        <div class="styled-input" style="float:right;">
+          <input formControlName="Numero" type="text" required />
+          <label>Numero de telefono:</label>
+        </div>
+      </div>
+      <div class="col-xs-12">
+        <div class="styled-input wide">
+          <textarea formControlName="Mensaje" required></textarea>
+          <label>Mensaje:</label>
+        </div>
+      </div>
+      <div class="col-xs-12">
+        <button (click)="onSubmit()" class="btn-lrg submit-btn">Enviar mensaje</button>
+      </div>
+    </form>
+  </div>
