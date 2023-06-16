@@ -26,21 +26,21 @@ namespace GoldenEleganceProyecto.Service.Services
 
         }
 
-        public async Task<ResponseHelper> LoginUsuario(Usuarios usuario)
+        public async Task<IResponseToken> LoginUsuario(Usuarios usuario)
         {
 
             if (usuario == null)
-                return new ResponseHelper { Success = false, HelperData = "No se encontro el usuario", Message = "El usuario no pudo ser encontrado" };
+                return new IResponseToken { Success = false, HelperData = "No se encontro el usuario", Message = "El usuario no pudo ser encontrado" };
 
 
             var user = await _context.Usuario.FirstOrDefaultAsync(x => x.Correo == usuario.Correo);
 
             if (user == null)
-                return new ResponseHelper { Success = false, HelperData = "No se encontro el usuario revise el correo o contraseña", Message = "El usuario no pudo ser encontrado" };
+                return new IResponseToken { Success = false, HelperData = "No se encontro el usuario revise el correo o contraseña", Message = "El usuario no pudo ser encontrado" };
 
             if (!PasswordHasher.VerifyPassword(usuario.Password, user.Password))
             {
-                return new ResponseHelper
+                return new IResponseToken
                 {
                     Success = false,
                     HelperData = "No se encontro el usuario revise el correo o contraseña",
@@ -50,10 +50,11 @@ namespace GoldenEleganceProyecto.Service.Services
 
             user.Token = CreateJwtToken(user);
 
-            return new ResponseHelper
+            return new IResponseToken
             {
                 Success = true,
-                HelperData = user.Token,
+                HelperData = "Correcto",
+                Token= user.Token,
                 Message = "Inicio de sesion correcto"
             };
         }

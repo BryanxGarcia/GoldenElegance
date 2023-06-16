@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
 
 
 @Injectable({
@@ -8,19 +10,21 @@ import { Router } from '@angular/router';
 })
 export class AuthService {
 
-  private baseUrl:string = "https://localhost:44397/api/Authentication/"
+  private baseUrl: string = environment.serverUrl;
+  private controller: string = '/api/Authentication';
+
   constructor(private http: HttpClient, private router: Router) { }
 
 
-  signUp(userObj: any){
-     return this.http.post<any>(`${this.baseUrl}Registro`, userObj);
+  registrarse(FormRegistro: FormGroup){
+     return this.http.post<any>(`${this.baseUrl}${this.controller}/Registro`, FormRegistro);
   }
 
-  login(userLog: any){
-    return this.http.post<any>(`${this.baseUrl}Login`, userLog);
+  iniciarSesion(FormInicio: FormGroup){
+    return this.http.post<any>(`${this.baseUrl}${this.controller}/Login`, FormInicio);
   }
 
-  storeToken(tokenValue: string){
+  almacenarToken(tokenValue: string){
     localStorage.setItem('token', tokenValue)
   }
 

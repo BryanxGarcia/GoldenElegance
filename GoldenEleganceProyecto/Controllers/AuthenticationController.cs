@@ -31,18 +31,13 @@ namespace GoldenEleganceProyecto.Controllers
             if(usuario == null)
                 return BadRequest();
 
-            var responseHelper = await _authenticationServicio.LoginUsuario(usuario);
-            if(responseHelper.Success == false)
+            var responseToken = await _authenticationServicio.LoginUsuario(usuario);
+            if(responseToken.Success == false)
             {
-                BadRequest(responseHelper);
+                BadRequest(responseToken);
             }
 
-            return Ok(new
-            {
-                Success = true,
-                Token = responseHelper.HelperData,
-                Message ="Login Succes"
-            });
+            return Ok(responseToken);
         }
 
 
