@@ -3,6 +3,8 @@ import { Injectable } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
+import { IResponse } from '../models/IResponse.interface';
+import { IResponseToken } from '../models/IResponseToken.interface';
 
 
 @Injectable({
@@ -17,7 +19,7 @@ export class AuthService {
 
 
   registrarse(FormRegistro: FormGroup){
-     return this.http.post<any>(`${this.baseUrl}${this.controller}/Registro`, FormRegistro);
+     return this.http.post<IResponse>(`${this.baseUrl}${this.controller}/Registro`, FormRegistro);
   }
 
   iniciarSesion(FormInicio: FormGroup){

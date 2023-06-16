@@ -27,10 +27,7 @@ namespace GoldenEleganceProyecto.Controllers
         [Route("SendEmailContacto")]
         public async Task<IActionResult> SendEmailContact(EmailDTO request)
         {
-            ResponseHelper response = new  ResponseHelper();
-
-             response =await _emailService.SendEmail(request);
-
+            var  response =await _emailService.SendEmail(request);
             return Ok(response);
         }
 

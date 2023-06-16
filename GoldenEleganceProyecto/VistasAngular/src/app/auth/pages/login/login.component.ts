@@ -90,7 +90,7 @@ export class LoginComponent {
   onSingUp() {
     if (this.sigUpForm.valid) {
       this.auth
-        .registrase(this.sigUpForm.value)
+        .registrarse(this.sigUpForm.value)
         .pipe(
           catchError((error: HttpErrorResponse) => {
             let response: IResponse = {

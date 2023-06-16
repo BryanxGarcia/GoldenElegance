@@ -3,12 +3,13 @@ import { HttpClient } from '@angular/common/http';
 import { FormGroup } from '@angular/forms';
 import { IResponse } from '../models/IResponse.interface';
 import { IMensajeria } from '../models/IMensajeria.interface';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MensajeriaService {
-private baseUrl: string = environment.serveUrl;
+private baseUrl: string = environment.serverUrl;
 private controller: string ='/api/Email';
 
 constructor(private http: HttpClient) { }
