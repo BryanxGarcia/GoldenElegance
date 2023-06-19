@@ -4,6 +4,7 @@ import { CarritoCompraComponent } from './pages/carrito-compra/carrito-compra.co
 import { FavoritosComponent } from './pages/favoritos/favoritos.component';
 import { HistorialComponent } from './pages/historial/historial.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
+import { InicioComponent } from './pages/inicio/inicio.component';
 
 
 const routes: Routes = [
@@ -33,6 +34,13 @@ const routes: Routes = [
     component: DashboardComponent,
     data: {
       title: 'Dashboard',
+    }
+  },
+  {
+    path: 'inicio',
+    component: InicioComponent,
+    data: {
+      title: 'Inicio',
     }
   },
   

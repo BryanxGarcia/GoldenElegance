@@ -11,7 +11,10 @@ namespace GoldenEleganceProyecto.Service.IServices
 
         Task<IResponseToken> LoginUsuario(Usuarios usuario);
 
-        Task<ResponseHelper> ResetPassword(string correo);
+        Task<ResponseHelper> ResetPassword(ResetPasswordDTO resetPasswordDTO);
+        Task<IResponseToken> AsignarTokenNuevo(TokenApi tokenApi);
+        Task<ResponseHelper> ResetPasswor2(string email);
+
 
     }
 }

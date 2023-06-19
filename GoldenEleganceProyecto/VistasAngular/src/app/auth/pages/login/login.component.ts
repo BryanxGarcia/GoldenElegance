@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
@@ -8,6 +7,7 @@ import { IResponseToken } from '../../../models/IResponseToken.interface';
 import { IResponse } from 'src/app/models/IResponse.interface';
 import { catchError, of } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
+import { UserStoreService } from 'src/app/services/Usuarios/user-store.service';
 
 @Component({
   selector: 'app-login',
@@ -18,9 +18,10 @@ export class LoginComponent {
   constructor(
     private fb: FormBuilder,
     private auth: AuthService,
-    private route: Router
-  ) {}
-
+    private route: Router,
+    private userStoreS: UserStoreService
+  ) { }
+  public role: string = "";
   claseDiv: string = 'container';
 
   sigUpForm: FormGroup = this.fb.group({
@@ -35,7 +36,6 @@ export class LoginComponent {
     Password: ['', Validators.required],
   });
 
-  ngOnInit(): void {}
 
   cambiar() {
     this.claseDiv = 'container  right-panel-active';
@@ -56,8 +56,8 @@ export class LoginComponent {
               helperData: "",
               message: "",
             };
-            if(error.status == 404 || error.status == 400 || error.status == 401){
-              if(error.error != null){
+            if (error.status == 404 || error.status == 400 || error.status == 401) {
+              if (error.error != null) {
                 response = error.error;
               }
             }
@@ -73,8 +73,15 @@ export class LoginComponent {
               showConfirmButton: false,
               timer: 1500,
             });
-            this.auth.almacenarToken(response.token);
-            this.route.navigate(['base/dashboard']);
+            let rol = this.StorageUser(response);
+            console.log(rol);
+            if(Number(rol) == 1 ){
+              this.route.navigate(['base/dashboard']);
+
+            }else{
+              this.route.navigate(['base/inicio']);
+
+            }
           } else {
             Swal.fire({
               position: 'top-end',
@@ -85,6 +92,19 @@ export class LoginComponent {
           }
         });
     }
+  }
+  private StorageUser(response: IResponseToken) {
+    this.auth.almacenarToken(response.token);
+    this.auth.almacenarRefreshToken(response.refreshToken);
+    const tokenPayload = this.auth.decodedToken();
+    this.userStoreS.setUsernameFromStore(tokenPayload.name);
+    this.userStoreS.setRoleFromStore(tokenPayload.role);
+    this.userStoreS.getRoleFromStore()
+      .subscribe(valor => {
+        let rolFromToken = this.auth.getRolFromToken();
+        this.role = valor || rolFromToken;
+      })
+      return this.role;
   }
 
   onSingUp() {
@@ -98,8 +118,8 @@ export class LoginComponent {
               helperData: 'Datos incorrectos',
               message: 'No se pudo iniciar sesion',
             };
-            if(error.status == 404 || error.status == 400 || error.status == 401){
-              if(error.error != null){
+            if (error.status == 404 || error.status == 400 || error.status == 401) {
+              if (error.error != null) {
                 response = error.error;
               }
             }

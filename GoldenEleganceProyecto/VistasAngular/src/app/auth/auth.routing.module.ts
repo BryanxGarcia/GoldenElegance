@@ -3,8 +3,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './pages/login/login.component';
 import { ResetPasswordComponent } from './pages/reset-password/reset-password.component';
 import { ContactanosComponent } from './pages/contactanos/contactanos.component';
-import { InicioComponent } from '../base-admin/pages/inicio/inicio.component';
 import { PagInicialComponent } from './pages/pag-inicial/pag-inicial.component';
+import { FormResetPasswordComponent } from './pages/form-reset-password/form-reset-password.component';
 
 const routes: Routes = [
   {
@@ -33,6 +33,13 @@ const routes: Routes = [
     component: ResetPasswordComponent,
     data: {
       title: 'Restaurar contraseña',
+    }
+  },
+  {
+    path: 'reset',
+    component: FormResetPasswordComponent,
+    data: {
+      title: 'Restauracion de contraseña',
     }
   },
   

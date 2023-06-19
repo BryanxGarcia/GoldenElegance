@@ -10,6 +10,7 @@ import { ResetPasswordComponent } from './pages/reset-password/reset-password.co
 import { ContactanosComponent } from './pages/contactanos/contactanos.component';
 import { PagInicialComponent } from './pages/pag-inicial/pag-inicial.component';
 import { HeaderComponent } from '../shared/components/header/header.component';
+import { FormResetPasswordComponent } from './pages/form-reset-password/form-reset-password.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { HeaderComponent } from '../shared/components/header/header.component';
     ResetPasswordComponent,
     ContactanosComponent,
     PagInicialComponent,
-    HeaderComponent
+    HeaderComponent,
+    FormResetPasswordComponent
   ],
   imports: [
     CommonModule,

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { UserStoreService } from 'src/app/services/Usuarios/user-store.service';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -7,8 +8,19 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./nadvar-user.component.css']
 })
 export class NadvarUserComponent {
-  constructor (private auth: AuthService ){
+  constructor(private auth: AuthService, private userStore: UserStoreService) { }
 
+  public username: string = "";
+  ngOnInit() {
+
+    this.userStore.getUsernameFromStore()
+      .subscribe(valor => {
+        let fullNameFromToken = this.auth.getUsernameFromToken();
+        this.username = valor || fullNameFromToken
+      })
   }
 
+  logout() {
+    this.auth.signOut();
+  }
 }
