@@ -1,4 +1,5 @@
 ﻿using GoldenEleganceProyecto.Models;
+using GoldenEleganceProyecto.Models.Helpers;
 using GoldenEleganceProyecto.Service.IServices;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -16,9 +17,6 @@ namespace GoldenEleganceProyecto.Controllers
         {
             _authenticationServicio = authenticationServicio;
         }
-
-
-        //ryvbgumgqigdjogr
 
         /// <summary>
         /// 
@@ -56,6 +54,42 @@ namespace GoldenEleganceProyecto.Controllers
             var responseHelper = await _authenticationServicio.RegistrarUsuario(usuario);
 
             return Ok(responseHelper);
+        }
+
+        [HttpPost]
+        [Route("RefreshToken")]
+        public async Task<IActionResult> SingUp(TokenApi tokenApi)
+        {
+            if (tokenApi == null)
+                return BadRequest("Solicitud invalida");
+
+            var responseToken = await _authenticationServicio.AsignarTokenNuevo(tokenApi);
+            if (responseToken.Success == false)
+                return BadRequest(responseToken);
+
+            return Ok(responseToken);
+        }
+
+        [HttpPost]
+        [Route("send-reset-email/{email}")]
+        public async Task<IActionResult> SendEmailPassword(string email)
+        {
+            var user = await _authenticationServicio.ResetPasswor2(email);
+            if (user == null)
+                return BadRequest();
+
+            return Ok(user);
+
+        }
+        [HttpPost]
+        [Route("reset-password")]
+        public async Task<IActionResult> ResetPassword( ResetPasswordDTO resetPasswordDTO)
+        {
+            var user = await _authenticationServicio.ResetPassword(resetPasswordDTO);
+                 if (user == null)
+                return BadRequest();
+
+            return Ok(user);
         }
     }
 }

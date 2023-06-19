@@ -12,17 +12,27 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.IdentityModel.Tokens;
+using System.Security.Cryptography;
+using MimeKit;
+using MailKit.Security;
+using MimeKit.Text;
+using MimeKit;
+using MailKit.Net.Smtp;
 
 namespace GoldenEleganceProyecto.Service.Services
 {
     public class AuthenticationServicio : IAuthenticationServicio
     {
+        private readonly IConfiguration _config;
         private readonly ApplicationDbContext _context;
         private readonly ILogger<Usuarios> _logger;
-        public AuthenticationServicio(ApplicationDbContext context, ILogger<Usuarios> logger)
+
+        public AuthenticationServicio(ApplicationDbContext context, ILogger<Usuarios> logger, IConfiguration config)
         {
             _logger = logger;
             _context = context;
+            _config = config;
+
 
         }
 
@@ -49,12 +59,17 @@ namespace GoldenEleganceProyecto.Service.Services
             }
 
             user.Token = CreateJwtToken(user);
+            var newAccessToken = user.Token;
+            var newRefreshtoken = CreateRefreshToken();
+            user.RefreshToken = newAccessToken;
+            await _context.SaveChangesAsync();
 
             return new IResponseToken
             {
                 Success = true,
                 HelperData = "Correcto",
-                Token= user.Token,
+                Token= newAccessToken,
+                RefreshToken = newRefreshtoken,
                 Message = "Inicio de sesion correcto"
             };
         }
@@ -82,7 +97,7 @@ namespace GoldenEleganceProyecto.Service.Services
                     return new ResponseHelper { Success = false, Message = checkpass.ToString() };
 
 
-                usuario.FKRol = 4;
+                usuario.FKRol = 2;
                 usuario.RowVersion = DateTime.Now;
                 usuario.EmailConfirmed = false;
                 usuario.IsDeleted = false;
@@ -91,7 +106,7 @@ namespace GoldenEleganceProyecto.Service.Services
 
                 var resp = await _context.Usuario.AddAsync(usuario);
                 var respu = await _context.SaveChangesAsync();
-                if (resp == null && respu > 0)
+                if (resp != null && respu > 0)
                 {
                     return new ResponseHelper { Success = true, Message = "El usuario fue creado correctamente" };
 
@@ -116,10 +131,70 @@ namespace GoldenEleganceProyecto.Service.Services
             throw new NotImplementedException();
         }
 
-        public Task<ResponseHelper> ResetPassword(string correo)
+        public async Task<ResponseHelper> ResetPasswor2(string correo)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var user = await _context.Usuario.FirstOrDefaultAsync(a => a.Correo == correo);
+
+                if (user == null)
+                    return new ResponseHelper { Success = false, Message = "Error no se pudo encontrar ese usuario" };
+
+                var tokenBytes = RandomNumberGenerator.GetBytes(64);
+                var emailtoken = Convert.ToBase64String(tokenBytes);
+                user.ResetPasswordToken = emailtoken;
+                user.ResetPasswordExpiry = DateTime.Now.AddMinutes(15);
+
+                var email = new MimeMessage();
+                email.To.Add(MailboxAddress.Parse(correo));
+                email.From.Add(MailboxAddress.Parse(_config.GetSection("Email:Username").Value));
+                email.Subject = "Mensaje para recuperacion de contraseña para Golden Elegance";
+
+                email.Body = new TextPart(TextFormat.Html)
+                {
+                    Text = $@"<html>
+                <a href = ""http://localhost:4200/auth/reset?email={correo}&code={emailtoken}"">Resett password </a>
+                    </html>"
+                };
+                using var smtp = new SmtpClient();
+                smtp.Connect(
+                    _config.GetSection("Email:Host").Value,
+                    Convert.ToInt32(_config.GetSection("Email:Port").Value),
+                    SecureSocketOptions.StartTls
+                    );
+
+                smtp.Authenticate(
+                    _config.GetSection("Email:Username").Value,
+                    _config.GetSection("Email:Password").Value
+                    );
+
+                var respuestaAdmin = await smtp.SendAsync(email);
+
+                _context.Entry(user).State = EntityState.Modified;
+                await _context.SaveChangesAsync();
+
+                if (respuestaAdmin != null)
+                {
+                    return new ResponseHelper { Success = false, Message = "No se envio el correo" };
+                }
+                return new ResponseHelper { Success = true, Message = "Se envio correctamente la contraseña" };
+            }
+            catch (Exception ex)
+            {
+                return new ResponseHelper { Success = false, Message = ex.Message };
+
+
+            }
+
         }
+
+        // public static string EmailStringBody(string email, string emailToken)
+        //{
+        //    return $@"<html>
+        //        <a href = ""https://localhost:44397/reset?email={email}&code={emailToken}"">Resett password </a>
+        //            </html>";
+
+        //}
 
         private async Task<bool> CheckUsernameExist(string username)
         {
@@ -168,6 +243,103 @@ namespace GoldenEleganceProyecto.Service.Services
             var token = jwtTokenHandler.CreateToken(tokenDescriptor);
 
             return jwtTokenHandler.WriteToken(token);
+        }
+
+        private string CreateRefreshToken()
+        {
+            var tokenBytes = RandomNumberGenerator.GetBytes(64);
+            var refreshToken = Convert.ToBase64String(tokenBytes);
+
+            var tokenInUser = _context.Usuario
+                .Any(a=>a.RefreshToken == refreshToken);
+
+            if(tokenInUser)
+            {
+                return CreateRefreshToken();
+            }
+            return refreshToken;
+        }
+
+        private ClaimsPrincipal GetPrincipleFromExpiredToken(string token)
+        {
+            var key = Encoding.ASCII.GetBytes("muchosecrete.....");
+
+            var tokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateAudience = false,
+                ValidateIssuer = false,
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = new SymmetricSecurityKey(key),
+                ValidateLifetime = false,
+            };
+            var tokenHandler = new JwtSecurityTokenHandler();
+            SecurityToken securityToken;
+            var principal = tokenHandler.ValidateToken(token, tokenValidationParameters, out securityToken);
+            var jwtSecurityToken = securityToken as JwtSecurityToken;
+            if (jwtSecurityToken == null || !jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256, StringComparison.InvariantCultureIgnoreCase))
+                throw new SecurityTokenException("Este es un token invalido");
+            return principal;
+        }
+
+        public async Task<IResponseToken> AsignarTokenNuevo(TokenApi tokenApi)
+        {
+            string accesToken = tokenApi.AccessToken;
+            string refreshToken = tokenApi.RefreshToken;
+            var principal = GetPrincipleFromExpiredToken(accesToken);
+            var username = principal.Identity.Name;
+            var user = await _context.Usuario.FirstOrDefaultAsync(x => x.Username == username);
+            if (user is null || user.RefreshToken != refreshToken || user.RefreshTokenExpiryTime <= DateTime.Now)
+                return new IResponseToken
+                {
+                    Success = false,
+                    HelperData = "",
+                    Token = "",
+                    RefreshToken = "",
+                    Message = ""
+                };
+
+            var newAccesstoken = CreateJwtToken(user);
+            var newrefreshToken = CreateRefreshToken();
+            user.RefreshToken = newrefreshToken;
+            await _context.SaveChangesAsync();
+            return new IResponseToken
+            {
+                Success = true,
+                HelperData = "Correcto",
+                Token = newAccesstoken,
+                RefreshToken = newrefreshToken,
+                Message = "Acceso correcto"
+            };
+
+        }
+
+        public async Task<ResponseHelper> ResetPassword(ResetPasswordDTO resetPasswordDTO)
+        {
+            try { 
+            var newToken = resetPasswordDTO.EmailToken.Replace(" ", "+");
+            var user = await _context.Usuario.AsNoTracking().FirstOrDefaultAsync(a => a.Correo == resetPasswordDTO.Email);
+            if(user is null)
+            {
+                return new ResponseHelper { Success = false, Message = "No se envio el correo" };
+
+            }
+            var tokenCode = user.ResetPasswordToken;
+            DateTime emailTokenExpiry = user.ResetPasswordExpiry;
+            if(tokenCode != resetPasswordDTO.EmailToken || emailTokenExpiry < DateTime.Now)
+            {
+                return new ResponseHelper { Success = false, Message = "Surgio un problema" };
+            }
+            user.Password = PasswordHasher.HashPassword(resetPasswordDTO.NewPassword);
+            _context.Entry(user).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+            return new ResponseHelper { Success = true, Message = "Surgio un problema" };
+            }
+            catch (Exception ex)
+            {
+                return new ResponseHelper { Success = false, Message = ex.Message };
+
+
+            }
         }
     }
 }

@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { FormGroup } from '@angular/forms';
 import { IResponse } from '../models/IResponse.interface';
 import { IMensajeria } from '../models/IMensajeria.interface';
 import { environment } from 'src/environments/environment';

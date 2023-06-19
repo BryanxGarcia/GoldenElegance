@@ -22,6 +22,10 @@ namespace GoldenEleganceProyecto.Models
         public int FKRol { get; set; }
         public Rol Roles { get; set; }
         public bool IsDeleted { get; set; }
+        public string RefreshToken { get; set; }
+        public DateTime RefreshTokenExpiryTime { get; set; }
         public DateTime RowVersion { get; set; }
+        public string ResetPasswordToken { get; set; }
+        public DateTime ResetPasswordExpiry { get; set; }
     }
 }
