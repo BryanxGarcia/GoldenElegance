@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GoldenEleganceProyecto.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230616214240_V1")]
-    partial class V1
+    [Migration("20230619062231_VDB")]
+    partial class VDB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -122,6 +122,12 @@ namespace GoldenEleganceProyecto.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PkUsuario"), 1L, 1);
 
                     b.Property<string>("Apellido")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("ConfirmarEmailExpiry")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ConfirmarEmailToken")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Correo")

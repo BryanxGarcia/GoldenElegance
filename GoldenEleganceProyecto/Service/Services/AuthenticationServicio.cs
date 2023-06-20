@@ -13,7 +13,6 @@ using System.Text.RegularExpressions;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Cryptography;
-using MimeKit;
 using MailKit.Security;
 using MimeKit.Text;
 using MimeKit;
@@ -26,14 +25,14 @@ namespace GoldenEleganceProyecto.Service.Services
         private readonly IConfiguration _config;
         private readonly ApplicationDbContext _context;
         private readonly ILogger<Usuarios> _logger;
+        private readonly IEmailService _emailService;
 
-        public AuthenticationServicio(ApplicationDbContext context, ILogger<Usuarios> logger, IConfiguration config)
+        public AuthenticationServicio(ApplicationDbContext context, ILogger<Usuarios> logger, IConfiguration config, IEmailService emailService)
         {
             _logger = logger;
             _context = context;
             _config = config;
-
-
+            _emailService = emailService;
         }
 
         public async Task<IResponseToken> LoginUsuario(Usuarios usuario)
@@ -47,6 +46,9 @@ namespace GoldenEleganceProyecto.Service.Services
 
             if (user == null)
                 return new IResponseToken { Success = false, HelperData = "No se encontro el usuario revise el correo o contraseña", Message = "El usuario no pudo ser encontrado" };
+           
+            if(user.EmailConfirmed == false)
+                return new IResponseToken { Success = false, HelperData = "No se a confirmado el correo electronico del usuario", Message = "Correo no confirmado" };
 
             if (!PasswordHasher.VerifyPassword(usuario.Password, user.Password))
             {
@@ -124,77 +126,6 @@ namespace GoldenEleganceProyecto.Service.Services
 
             }
         }
-
-
-        public Task<Usuarios> ObtenerUsuario(int? Id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public async Task<ResponseHelper> ResetPasswor2(string correo)
-        {
-            try
-            {
-                var user = await _context.Usuario.FirstOrDefaultAsync(a => a.Correo == correo);
-
-                if (user == null)
-                    return new ResponseHelper { Success = false, Message = "Error no se pudo encontrar ese usuario" };
-
-                var tokenBytes = RandomNumberGenerator.GetBytes(64);
-                var emailtoken = Convert.ToBase64String(tokenBytes);
-                user.ResetPasswordToken = emailtoken;
-                user.ResetPasswordExpiry = DateTime.Now.AddMinutes(15);
-
-                var email = new MimeMessage();
-                email.To.Add(MailboxAddress.Parse(correo));
-                email.From.Add(MailboxAddress.Parse(_config.GetSection("Email:Username").Value));
-                email.Subject = "Mensaje para recuperacion de contraseña para Golden Elegance";
-
-                email.Body = new TextPart(TextFormat.Html)
-                {
-                    Text = $@"<html>
-                <a href = ""http://localhost:4200/auth/reset?email={correo}&code={emailtoken}"">Resett password </a>
-                    </html>"
-                };
-                using var smtp = new SmtpClient();
-                smtp.Connect(
-                    _config.GetSection("Email:Host").Value,
-                    Convert.ToInt32(_config.GetSection("Email:Port").Value),
-                    SecureSocketOptions.StartTls
-                    );
-
-                smtp.Authenticate(
-                    _config.GetSection("Email:Username").Value,
-                    _config.GetSection("Email:Password").Value
-                    );
-
-                var respuestaAdmin = await smtp.SendAsync(email);
-
-                _context.Entry(user).State = EntityState.Modified;
-                await _context.SaveChangesAsync();
-
-                if (respuestaAdmin != null)
-                {
-                    return new ResponseHelper { Success = false, Message = "No se envio el correo" };
-                }
-                return new ResponseHelper { Success = true, Message = "Se envio correctamente la contraseña" };
-            }
-            catch (Exception ex)
-            {
-                return new ResponseHelper { Success = false, Message = ex.Message };
-
-
-            }
-
-        }
-
-        // public static string EmailStringBody(string email, string emailToken)
-        //{
-        //    return $@"<html>
-        //        <a href = ""https://localhost:44397/reset?email={email}&code={emailToken}"">Resett password </a>
-        //            </html>";
-
-        //}
 
         private async Task<bool> CheckUsernameExist(string username)
         {
@@ -313,7 +244,7 @@ namespace GoldenEleganceProyecto.Service.Services
 
         }
 
-        public async Task<ResponseHelper> ResetPassword(ResetPasswordDTO resetPasswordDTO)
+        public async Task<ResponseHelper> ResetearPassword(ResetPasswordDTO resetPasswordDTO)
         {
             try { 
             var newToken = resetPasswordDTO.EmailToken.Replace(" ", "+");
@@ -332,7 +263,46 @@ namespace GoldenEleganceProyecto.Service.Services
             user.Password = PasswordHasher.HashPassword(resetPasswordDTO.NewPassword);
             _context.Entry(user).State = EntityState.Modified;
             await _context.SaveChangesAsync();
-            return new ResponseHelper { Success = true, Message = "Surgio un problema" };
+            return new ResponseHelper { Success = true, Message = "Contraseña actualizada correctamente" };
+            }
+            catch (Exception ex)
+            {
+                return new ResponseHelper { Success = false, Message = ex.Message };
+
+
+            }
+        }
+
+        public Task<Usuarios> ObtenerUsuario(int? Id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<ResponseHelper> ConfirmarEmail(ConfirmacionCorreoDTO confirmacionCorreo)
+        {
+            try
+            {
+                var newToken = confirmacionCorreo.EmailToken.Replace(" ", "+");
+                var user = await _context.Usuario.AsNoTracking().FirstOrDefaultAsync(a => a.Correo == confirmacionCorreo.Email);
+            
+                if (user is null)
+                {
+                    return new ResponseHelper { Success = false, Message = "El correo a confirmar al pareceer no se encuentra registrado" };
+
+                }
+                var tokenCode = user.ConfirmarEmailToken;
+                DateTime emailTokenExpiry = user.ConfirmarEmailExpiry;
+                if (tokenCode != confirmacionCorreo.EmailToken || emailTokenExpiry < DateTime.Now)
+                {
+
+                    await _emailService.SendEmailConfirmacionCorreo(confirmacionCorreo.Email);
+                    return new ResponseHelper { Success = false, Message = "La confirmacion del correo ya expiro, se acaba de enviar un nuevo correo de confirmacion" };
+
+                }
+                user.EmailConfirmed = true;
+                _context.Entry(user).State = EntityState.Modified;
+                await _context.SaveChangesAsync();
+                return new ResponseHelper { Success = true, Message = "Correo confirmado correctamente" };
             }
             catch (Exception ex)
             {

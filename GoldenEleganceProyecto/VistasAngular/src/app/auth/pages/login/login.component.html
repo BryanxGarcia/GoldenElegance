@@ -7,10 +7,22 @@
                 <h1>Crear Cuenta</h1>
                 <span>O usa tu email para suscribirte</span>
                 <input formControlName="Nombre" type="text" placeholder="Nombre" />
+                <label *ngIf="sigUpForm.get('Nombre')!.hasError('required') && sigUpForm.get('Nombre')!.touched">
+                    Nombre requerido
+                </label>
                 <input formControlName="Username" type="text" placeholder="Username" />
+                <label *ngIf="sigUpForm.get('Username')!.hasError('required') && sigUpForm.get('Username')!.touched">
+                    El username es requerido
+                </label>
                 <input formControlName="Correo" type="email" placeholder="Email" />
+                <label *ngIf="sigUpForm.get('Correo')!.hasError('required') && sigUpForm.get('Correo')!.touched">
+                    El correo es requerido
+                </label>
                 <input formControlName="Password" type="password" placeholder="Password" />
-                <button (click)="onSingUp()" type="submit">Registrarse</button>
+                <label *ngIf="sigUpForm.get('Password')!.hasError('required') && sigUpForm.get('Password')!.touched">
+                    La contraseña es requerida
+                </label>
+                <button (click)="onSingUp()" type="submit" [disabled]="sigUpForm.invalid">Registrarse</button>
             </form>
         </div>
         <div class="form-container sign-in-container">
@@ -20,7 +32,7 @@
                 <input name="email" formControlName="Correo" type="email" placeholder="Email" />
                 <input name="Pass" formControlName="Password" type="password" placeholder="Password" />
                 <div class="form-inline fr mt-4">
-                    <a  routerLink="/auth/restaurarContasena">¿Olvidaste tu contraseña?</a>
+                    <a routerLink="/auth/restaurarContasena">¿Olvidaste tu contraseña?</a>
                 </div>
                 <button (click)="onLogin()" type="submit">Iniciar sesion</button>
             </form>

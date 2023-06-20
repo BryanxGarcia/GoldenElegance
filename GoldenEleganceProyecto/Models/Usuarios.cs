@@ -15,6 +15,8 @@ namespace GoldenEleganceProyecto.Models
         public string Password { get; set; }
         public string Token { get; set; }
         public bool EmailConfirmed { get; set; }
+        public string ConfirmarEmailToken { get; set; }
+        public DateTime ConfirmarEmailExpiry { get; set; }
         public string Telefono { get; set; }
         public string Direccion { get; set; }
 
@@ -27,5 +29,6 @@ namespace GoldenEleganceProyecto.Models
         public DateTime RowVersion { get; set; }
         public string ResetPasswordToken { get; set; }
         public DateTime ResetPasswordExpiry { get; set; }
+
     }
 }
