@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { IProductos } from 'src/app/models/IProductos.interface.';
+import { ProductsService } from 'src/app/services/productsService/products.service';
 
 @Component({
   selector: 'app-inicio',
@@ -7,4 +9,20 @@ import { Component } from '@angular/core';
 })
 export class InicioComponent {
 
+productos:IProductos[] =[];
+
+  constructor(private _productsService: ProductsService){
+
+  }
+
+  ngOnInit(): void {
+    this.obtenerProductos();
+  }
+
+  obtenerProductos() {
+    this._productsService.listarProducto().subscribe(data => {
+      console.log(data);
+      this.productos = data;
+    })
+  }
 }

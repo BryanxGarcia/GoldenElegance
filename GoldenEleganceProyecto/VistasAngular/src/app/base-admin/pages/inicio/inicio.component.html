@@ -1,1 +1,14 @@
-<p>inicio works!</p>
+<app-nadvar-user></app-nadvar-user>
+<div class="container-cards">
+    <div  *ngFor="let item of productos" >
+        <div class="cards">
+            <figure>
+                <img src="../../../../assets/img/imag.png">
+            </figure>
+            <div class="contenido-cards">
+                <h3>{{item.nombreProducto }}</h3>
+                <p>${{item.precioVenta}}</p>
+            </div>
+        </div>
+    </div>
+</div>

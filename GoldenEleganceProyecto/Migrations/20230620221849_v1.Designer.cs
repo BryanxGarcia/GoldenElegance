@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GoldenEleganceProyecto.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230616214240_V1")]
-    partial class V1
+    [Migration("20230620221849_v1")]
+    partial class v1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
