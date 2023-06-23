@@ -8,6 +8,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { TokenApiModel } from '../models/Token-api.model';
 import { IResponseToken } from '../models/IResponseToken.interface';
 import { ResetPassword } from '../models/reset-password.model';
+import { ConfirmarEmail } from '../models/confirmarEmail.model';
 
 @Injectable({
   providedIn: 'root'
@@ -81,4 +82,9 @@ export class AuthService {
   resetPassword(resetPasswordObj: ResetPassword){
     return this.http.post<IResponse>(`${this.baseUrl}${this.controller}/reset-password`, resetPasswordObj);
   }
+
+  confirmarCuenta(confirmarObj: ConfirmarEmail){
+    return this.http.post<IResponse>(`${this.baseUrl}${this.controller}/confirmarCorreo`, confirmarObj);
+  }
+
 }

@@ -71,7 +71,7 @@ export class LoginComponent {
               icon: 'success',
               title: 'Inicio de sesión correcto',
               showConfirmButton: false,
-              timer: 1500,
+              timer: 2500,
             });
             let rol = this.StorageUser(response);
             console.log(rol);
@@ -88,6 +88,8 @@ export class LoginComponent {
               icon: 'warning',
               title: 'Error al iniciar sesión',
               text: response.message,
+              timer: 2500,
+
             });
           }
         });
@@ -141,10 +143,10 @@ export class LoginComponent {
             Swal.fire({
               position: 'top-end',
               icon: 'warning',
-              title: 'Usuario no registrado intentelo mas tarde',
+              title: 'Usuario no registrado',
               text: response.message,
               showConfirmButton: false,
-              timer: 1500,
+              timer: 3500,
             });
           }
         });

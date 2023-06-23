@@ -5,6 +5,7 @@ import { ResetPasswordComponent } from './pages/reset-password/reset-password.co
 import { ContactanosComponent } from './pages/contactanos/contactanos.component';
 import { PagInicialComponent } from './pages/pag-inicial/pag-inicial.component';
 import { FormResetPasswordComponent } from './pages/form-reset-password/form-reset-password.component';
+import { ConfirmarEmailComponent } from './pages/confirmar-email/confirmar-email.component';
 
 const routes: Routes = [
   {
@@ -42,7 +43,13 @@ const routes: Routes = [
       title: 'Restauracion de contraseña',
     }
   },
-  
+  {
+    path: 'confirmacion',
+    component: ConfirmarEmailComponent,
+    data: {
+      title: 'Confirmacion de cuenta',
+    }
+  },
   {
     path: '**',
     redirectTo: 'login'

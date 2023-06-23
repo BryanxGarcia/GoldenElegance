@@ -122,6 +122,12 @@ namespace GoldenEleganceProyecto.Migrations
                     b.Property<string>("Apellido")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime>("ConfirmarEmailExpiry")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ConfirmarEmailToken")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Correo")
                         .HasColumnType("nvarchar(max)");
 
