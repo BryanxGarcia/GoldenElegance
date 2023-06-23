@@ -9,12 +9,11 @@ import { environment } from 'src/environments/environment';
 })
 export class MensajeriaService {
 private baseUrl: string = environment.serverUrl;
-private controller: string ='/api/Email';
 
 constructor(private http: HttpClient) { }
 
 enviarContacto(Mensaje:IMensajeria ){
- return this.http.post<IResponse>(`${this.baseUrl}${this.controller}/SendEmailContacto`, Mensaje)
+ return this.http.post<IResponse>(`${this.baseUrl}/api/Email/SendEmailContacto`, Mensaje)
 }
 }
 

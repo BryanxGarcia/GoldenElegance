@@ -14,7 +14,7 @@
   height: 100%;
 }
 
-label {
+.classspan {
   font-size: 0.75em;
   color: red;
   top: 115px;

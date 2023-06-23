@@ -21,8 +21,8 @@ export class LoginComponent {
     private route: Router,
     private userStoreS: UserStoreService
   ) { }
-  public role: string = "";
-  claseDiv: string = 'container';
+  role= "";
+  claseDiv= 'container';
 
   sigUpForm: FormGroup = this.fb.group({
     Nombre: ['', Validators.required],
@@ -51,10 +51,12 @@ export class LoginComponent {
         .iniciarSesion(this.loginForm.value)
         .pipe(
           catchError((error: HttpErrorResponse) => {
-            let response: IResponse = {
+            let response: IResponseToken = {
               success: false,
               helperData: "",
               message: "",
+              token:"",
+              refreshToken:""
             };
             if (error.status == 404 || error.status == 400 || error.status == 401) {
               if (error.error != null) {
@@ -64,7 +66,7 @@ export class LoginComponent {
             return of(response);
           })
         )
-        .subscribe((response: IResponseToken) => {
+        .subscribe((response) => {
           if (response.success) {
             Swal.fire({
               position: 'top-end',
@@ -73,8 +75,7 @@ export class LoginComponent {
               showConfirmButton: false,
               timer: 2500,
             });
-            let rol = this.StorageUser(response);
-            console.log(rol);
+            const rol = this.StorageUser(response);
             if(Number(rol) == 1 ){
               this.route.navigate(['base/dashboard']);
 
@@ -103,9 +104,10 @@ export class LoginComponent {
     this.userStoreS.setRoleFromStore(tokenPayload.role);
     this.userStoreS.getRoleFromStore()
       .subscribe(valor => {
-        let rolFromToken = this.auth.getRolFromToken();
+        const rolFromToken = this.auth.getRolFromToken();
         this.role = valor || rolFromToken;
       })
+
       return this.role;
   }
 

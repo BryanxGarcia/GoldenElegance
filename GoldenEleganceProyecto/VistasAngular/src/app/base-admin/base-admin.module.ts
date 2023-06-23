@@ -23,9 +23,10 @@ import { EditarProductoComponent } from './pages/productos/editar-producto/edita
 import { CrearCategoriaComponent } from './pages/categorias/crear-categoria/crear-categoria.component';
 import { EditarCategoriaComponent } from './pages/categorias/editar-categoria/editar-categoria.component';
 import { ListarCategoriaComponent } from './pages/categorias/listar-categoria/listar-categoria.component';
-// import { SharedModule } from '../shared/shared.module';
-// import { NgxCaptchaModule } from 'ngx-captcha';
-
+import { DashboardNavigatorComponent } from '../shared/components/dashboard-navigator/dashboard-navigator.component';
+import { TableModule } from 'primeng/table';
+import { ToolbarModule } from 'primeng/toolbar';
+import { ToastModule } from 'primeng/toast';
 @NgModule({
   declarations: [
     CarritoCompraComponent,
@@ -35,7 +36,6 @@ import { ListarCategoriaComponent } from './pages/categorias/listar-categoria/li
     InicioComponent,
     PerfilUsuarioComponent,
     DashboardComponent,
-    NadvarUserComponent,
     CrearRolComponent,
     EliminarRolComponent,
     EditarRolComponent,
@@ -47,15 +47,18 @@ import { ListarCategoriaComponent } from './pages/categorias/listar-categoria/li
     CrearProductoComponent,
     EditarProductoComponent,
     CrearCategoriaComponent,
+    ListarCategoriaComponent,
     EditarCategoriaComponent,
-    ListarCategoriaComponent
+    DashboardNavigatorComponent,
+    NadvarUserComponent
   ],
   imports: [
     CommonModule,
     BaseAdminRoutingModule,
     ReactiveFormsModule,
-    // SharedModule,
-    // NgxCaptchaModule
+    TableModule,
+    ToolbarModule,
+    ToastModule
   ]
 })
 export class BaseAdminModule { }

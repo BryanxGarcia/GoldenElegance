@@ -6,6 +6,7 @@ import { ContactanosComponent } from './pages/contactanos/contactanos.component'
 import { PagInicialComponent } from './pages/pag-inicial/pag-inicial.component';
 import { FormResetPasswordComponent } from './pages/form-reset-password/form-reset-password.component';
 import { ConfirmarEmailComponent } from './pages/confirmar-email/confirmar-email.component';
+import { NotFoundComponent } from '../shared/components/not-found/not-found.component';
 
 const routes: Routes = [
   {
@@ -37,6 +38,13 @@ const routes: Routes = [
     }
   },
   {
+    path: 'NotFound',
+    component: NotFoundComponent,
+    data: {
+      title: 'Pagina no encontrada',
+    }
+  },
+  {
     path: 'reset',
     component: FormResetPasswordComponent,
     data: {
@@ -52,7 +60,7 @@ const routes: Routes = [
   },
   {
     path: '**',
-    redirectTo: 'login'
+    redirectTo: 'NotFound'
   }
 ];
 

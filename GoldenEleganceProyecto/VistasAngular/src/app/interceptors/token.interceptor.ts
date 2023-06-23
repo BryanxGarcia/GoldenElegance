@@ -1,4 +1,4 @@
-import { IResponseToken } from './../models/IResponseToken.interface';
+import { IResponseToken } from '../models/IResponseToken.interface';
 import { Injectable } from '@angular/core';
 import {
   HttpRequest,
@@ -25,7 +25,7 @@ export class TokenInterceptor implements HttpInterceptor {
       })
     }
     return next.handle(request).pipe(
-      catchError((err: any) => {
+      catchError((err) => {
         if (err instanceof HttpErrorResponse) {
           if (err.status === 401) {
             return this.handleUnAuthorizedError(request, next)
@@ -35,10 +35,10 @@ export class TokenInterceptor implements HttpInterceptor {
       })
     );
   }
-  handleUnAuthorizedError(req: HttpRequest<any>, next: HttpHandler) {
-    let tokeApiModel = new TokenApiModel();
-    tokeApiModel.accessToken = this.authS.getToken()!;
-    tokeApiModel.refreshtoken = this.authS.getRefreshToken()!;
+  handleUnAuthorizedError(req: HttpRequest<unknown>, next: HttpHandler) {
+    const tokeApiModel = new TokenApiModel();
+    tokeApiModel.accessToken = this.authS.getToken() ?? "";
+    tokeApiModel.refreshtoken = this.authS.getRefreshToken() ?? "";
     return this.authS.newRefreshToken(tokeApiModel)
       .pipe(
         switchMap((data: IResponseToken) => {
@@ -51,6 +51,7 @@ export class TokenInterceptor implements HttpInterceptor {
         }),
         catchError((err) => {
           return throwError(() => {
+            console.log(err.error)
             this.router.navigate(['login'])
           })
         })

@@ -5,6 +5,11 @@ import { FavoritosComponent } from './pages/favoritos/favoritos.component';
 import { HistorialComponent } from './pages/historial/historial.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { InicioComponent } from './pages/inicio/inicio.component';
+import { ListarProductosComponent } from './pages/productos/listar-productos/listar-productos.component';
+import { ListarUsuarioComponent } from './pages/usuarios/listar-usuario/listar-usuario.component';
+import { ListarCategoriaComponent } from './pages/categorias/listar-categoria/listar-categoria.component';
+import { ListarRolesComponent } from './pages/roles/listar-roles/listar-roles.component';
+import { NotFoundComponent } from '../shared/components/not-found/not-found.component';
 
 
 const routes: Routes = [
@@ -13,6 +18,13 @@ const routes: Routes = [
     component: CarritoCompraComponent,
     data: {
       title: 'Carrito de compra',
+    }
+  },
+  {
+    path: 'NotFound',
+    component: NotFoundComponent,
+    data: {
+      title: 'Pagina no encontrada',
     }
   },
   {
@@ -41,6 +53,31 @@ const routes: Routes = [
     component: InicioComponent,
     data: {
       title: 'Inicio',
+    }
+  },
+  {
+    path: 'productos',
+    component: ListarProductosComponent,
+    data: {
+      title: 'Productos',
+    }
+  },  {
+    path: 'usuarios',
+    component: ListarUsuarioComponent,
+    data: {
+      title: 'Inicio',
+    }
+  },  {
+    path: 'categorias',
+    component: ListarCategoriaComponent,
+    data: {
+      title: 'Roles',
+    }
+  },  {
+    path: 'roles',
+    component: ListarRolesComponent,
+    data: {
+      title: 'Roles',
     }
   },
   
