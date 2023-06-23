@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { authGuard } from './shared/guards/auth.guard';
+import { NotFoundComponent } from './shared/components/not-found/not-found.component';
 
 const routes: Routes = [
   {
@@ -21,8 +22,15 @@ const routes: Routes = [
     // canLoad: [AdminGuard]
   },
   {
+    path: 'NotFound',
+    component: NotFoundComponent,
+    data: {
+      title: 'Pagina no encontrada',
+    }
+  },
+  {
     path: '**',
-    redirectTo: 'auth'
+    redirectTo: 'NotFound'
   }
 ];
 

@@ -16,14 +16,15 @@ import { ConfirmarEmailComponent } from './pages/confirmar-email/confirmar-email
     ResetPasswordComponent,
     ContactanosComponent,
     PagInicialComponent,
-    HeaderComponent,
     FormResetPasswordComponent,
-    ConfirmarEmailComponent
+    ConfirmarEmailComponent,
+    HeaderComponent
   ],
   imports: [
     CommonModule,
     AuthRoutingModule,
     ReactiveFormsModule
   ]
+  
 })
 export class AuthModule { }

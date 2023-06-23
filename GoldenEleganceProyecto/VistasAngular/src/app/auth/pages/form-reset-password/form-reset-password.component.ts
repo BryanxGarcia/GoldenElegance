@@ -44,7 +44,7 @@ export class FormResetPasswordComponent implements OnInit {
 
       this.authS.resetPassword(this.resetPasswordObj)
       .subscribe({
-        next:(res)=>{
+        next:()=>{
           Swal.fire({
             position: 'top-end',
             icon: 'success',
@@ -54,7 +54,7 @@ export class FormResetPasswordComponent implements OnInit {
           });
           this.route.navigate(['login']);
         },
-        error:(err)=>{
+        error:()=>{
           Swal.fire({
             position: 'top-end',
             icon: 'warning',

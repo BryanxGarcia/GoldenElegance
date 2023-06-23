@@ -20,20 +20,20 @@ export class ResetPasswordComponent {
   onSubmit(){
   this.authS.sendResetPassword(this.emailPassword.controls['Correo'].value)
   .subscribe({
-    next:(res)=>{
+    next:(resp)=>{
       Swal.fire({
         position: 'top-end',
         icon: 'success',
-        title: 'Usuario registrado correctamente',
+        title: 'Se realizo correctamente el envio del email' + resp.message,
         showConfirmButton: false,
         timer: 1500,
       });
     }, 
-    error:(err)=>{
+    error:(error)=>{
       Swal.fire({
         position: 'top-end',
         icon: 'warning',
-        title: 'Usuario registrado correctamente',
+        title: 'No se pudo enviar' + error,
         showConfirmButton: false,
         timer: 1500,
       });

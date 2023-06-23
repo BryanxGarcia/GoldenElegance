@@ -30,7 +30,7 @@ export class ContactanosComponent {
     Asunto:"",
     Contenido:""
   }
-  onSubmit(){
+  onSubmit() : void {
     if (this.contactoForm.valid) {
       this.mensaje.Para =(this.contactoForm.controls['Correo'].value);
       this.mensaje.Contenido =("Nombre del contactador: " + this.contactoForm.controls['Nombre'].value + "\n Numero de telefono: " + this.contactoForm.controls['Numero'].value + "\n Mensaje: " + this.contactoForm.controls['Mensaje'].value);

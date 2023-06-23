@@ -7,21 +7,21 @@
                 <h1>Crear Cuenta</h1>
                 <span>O usa tu email para suscribirte</span>
                 <input formControlName="Nombre" type="text" placeholder="Nombre" />
-                <label *ngIf="sigUpForm.get('Nombre')!.hasError('required') && sigUpForm.get('Nombre')!.touched">
+                <span class="classspan" *ngIf="sigUpForm.get('Nombre')!.hasError('required') && sigUpForm.get('Nombre')!.touched">
                     Nombre requerido
-                </label>
+                </span>
                 <input formControlName="Username" type="text" placeholder="Username" />
-                <label *ngIf="sigUpForm.get('Username')!.hasError('required') && sigUpForm.get('Username')!.touched">
+                <span class="classspan" *ngIf="sigUpForm.get('Username')!.hasError('required') && sigUpForm.get('Username')!.touched">
                     El username es requerido
-                </label>
+                </span>
                 <input formControlName="Correo" type="email" placeholder="Email" />
-                <label *ngIf="sigUpForm.get('Correo')!.hasError('required') && sigUpForm.get('Correo')!.touched">
+                <span class="classspan" *ngIf="sigUpForm.get('Correo')!.hasError('required') && sigUpForm.get('Correo')!.touched">
                     El correo es requerido
-                </label>
+                </span>
                 <input formControlName="Password" type="password" placeholder="Password" />
-                <label *ngIf="sigUpForm.get('Password')!.hasError('required') && sigUpForm.get('Password')!.touched">
+                <span class="classspan" *ngIf="sigUpForm.get('Password')!.hasError('required') && sigUpForm.get('Password')!.touched">
                     La contraseña es requerida
-                </label>
+                </span>
                 <button (click)="onSingUp()" type="submit" [disabled]="sigUpForm.invalid">Registrarse</button>
             </form>
         </div>

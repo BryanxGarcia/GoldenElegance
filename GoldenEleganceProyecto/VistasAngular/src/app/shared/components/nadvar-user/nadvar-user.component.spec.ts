@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { NadvarUserComponent } from './nadvar-user.component';
 
 describe('NadvarUserComponent', () => {
@@ -8,6 +8,7 @@ describe('NadvarUserComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
+      imports: [ HttpClientTestingModule ],
       declarations: [NadvarUserComponent]
     });
     fixture = TestBed.createComponent(NadvarUserComponent);

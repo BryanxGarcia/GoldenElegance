@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PagInicialComponent } from './pag-inicial.component';
+import { HeaderComponent } from 'src/app/shared/components/header/header.component';
 
 describe('PagInicialComponent', () => {
   let component: PagInicialComponent;
@@ -8,7 +9,7 @@ describe('PagInicialComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [PagInicialComponent]
+      declarations: [PagInicialComponent, HeaderComponent]
     });
     fixture = TestBed.createComponent(PagInicialComponent);
     component = fixture.componentInstance;

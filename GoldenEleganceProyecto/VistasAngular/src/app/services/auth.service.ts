@@ -16,8 +16,8 @@ import { ConfirmarEmail } from '../models/confirmarEmail.model';
 export class AuthService {
 
   private baseUrl: string = environment.serverUrl;
-  private controller: string = '/api/Authentication';
-  private userPayload: any;
+  private controller = '/api/Authentication';
+  private userPayload;
   constructor(private http: HttpClient, private router: Router) {
     this.userPayload = this.decodedToken();
   }
@@ -28,7 +28,7 @@ export class AuthService {
   }
 
   iniciarSesion(FormInicio: FormGroup) {
-    return this.http.post<any>(`${this.baseUrl}${this.controller}/Login`, FormInicio);
+    return this.http.post<IResponseToken>(`${this.baseUrl}${this.controller}/Login`, FormInicio);
   }
 
   almacenarToken(tokenValue: string) {
@@ -46,7 +46,7 @@ export class AuthService {
   }
   signOut() {
     localStorage.clear();
-    this.router.navigate(['login'])
+    this.router.navigate(['/auth/login'])
   }
 
   
@@ -57,7 +57,7 @@ export class AuthService {
 
   decodedToken() {
     const jwtHelper = new JwtHelperService();
-    const token = this.getToken()!;
+    const token = this.getToken() ?? "";
     return jwtHelper.decodeToken(token);
   }
 
@@ -76,7 +76,7 @@ export class AuthService {
   }
 
   sendResetPassword(email: string){
-    return this.http.post<any>(`${this.baseUrl}${this.controller}/send-reset-email/${email}`, {});
+    return this.http.post<IResponse>(`${this.baseUrl}${this.controller}/send-reset-email/${email}`, {});
   }
 
   resetPassword(resetPasswordObj: ResetPassword){
