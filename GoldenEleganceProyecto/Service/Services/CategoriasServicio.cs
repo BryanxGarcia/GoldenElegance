@@ -17,32 +17,104 @@ namespace GoldenEleganceProyecto.Service.Services
 
         }
 
-        public Task<ResponseHelper> CrearCategoria(Categoria vm)
+        public async Task<ResponseHelper> CrearCategoria(Categoria categoria)
         {
-            throw new NotImplementedException();
+            try
+            {
+                if (categoria == null)
+                    return new ResponseHelper { Success = false, Message = "Necesitas rellenar los campos solicitados" };
+
+                categoria.RowVersion = DateTime.Now;
+                categoria.IsDeleted = false;
+
+                var resp = await _context.Categorias.AddAsync(categoria);
+                var respu = await _context.SaveChangesAsync();
+                if (resp != null && respu > 0)
+                {
+                    return new ResponseHelper { Success = true, Message = "La categoria fue creado correctamente" };
+
+                }
+                else
+                {
+                    return new ResponseHelper { Success = false, Message = "La categoria no fue creado correctamente" };
+
+                }
+            }
+            catch (Exception ex)
+            {
+                return new ResponseHelper { Success = false, Message = ex.Message };
+
+
+            }
         }
 
-        public Task<ResponseHelper> EditarCategoria(Categoria vm)
+        public async Task<ResponseHelper> EditarCategoria(Categoria categoria)
         {
-            throw new NotImplementedException();
+            try
+            {
+                if (categoria == null)
+                    return new ResponseHelper { Success = false, Message = "Necesitas rellenar los campos solicitados" };
+
+                Categoria CatAnadir = new Categoria();
+                CatAnadir = await _context.Categorias.FirstOrDefaultAsync(x => x.PkCategoria == categoria.PkCategoria);
+                CatAnadir.NombreCat = categoria.NombreCat;
+                CatAnadir.Descripcion = categoria.Descripcion;
+                CatAnadir.RowVersion = DateTime.Now;
+
+                var resp = _context.Categorias.Update(CatAnadir);
+                var respu = await _context.SaveChangesAsync();
+
+                if (resp != null && respu > 0)
+                {
+                    return new ResponseHelper { Success = true, Message = "El producto fue creado correctamente" };
+
+                }
+                else
+                {
+                    return new ResponseHelper { Success = false, Message = "El producto no fue creado correctamente" };
+
+                }
+            }
+            catch (Exception ex)
+            {
+                return new ResponseHelper { Success = false, Message = ex.Message };
+
+
+            }
         }
 
-        public Task<ResponseHelper> EliminarCategoria(int? Id)
+        public async Task<ResponseHelper> EliminarCategoria(int? Id)
         {
-            throw new NotImplementedException();
+            Categoria categoria = new Categoria();
+            categoria = await _context.Categorias.FirstOrDefaultAsync(x => x.PkCategoria == Id);
+
+            var resp = _context.Categorias.Remove(categoria);
+            var respu = await _context.SaveChangesAsync();
+
+            if (resp != null && respu > 0)
+            {
+                return new ResponseHelper { Success = true, Message = "La categoria fue eliminada correctamente" };
+
+            }
+            else
+            {
+                return new ResponseHelper { Success = false, Message = "La categoria no pudo ser eliminada" };
+
+            }
         }
 
         public async Task<List<Categoria>> ObtenerLista()
         {
-            List<Categoria> Cat = new List<Categoria>();
-
-            Cat = await _context.Categorias.ToListAsync();
+            List<Categoria> Cat = await _context.Categorias.ToListAsync();
             return Cat;
         }
 
-        public Task<Categoria> ObtenerPorId(int? Id)
+        public async Task<Categoria> ObtenerPorId(int? Id)
         {
-            throw new NotImplementedException();
+            Categoria categoria = new();
+
+            categoria = await _context.Categorias.FirstOrDefaultAsync(x => x.PkCategoria == Id);
+            return categoria;
         }
     }
 }

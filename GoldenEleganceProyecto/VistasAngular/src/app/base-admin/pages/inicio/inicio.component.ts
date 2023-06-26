@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { IProductos } from 'src/app/models/IProductos.interface.';
 import { ProductsService } from 'src/app/services/productsService/products.service';
 
@@ -7,7 +7,7 @@ import { ProductsService } from 'src/app/services/productsService/products.servi
   templateUrl: './inicio.component.html',
   styleUrls: ['./inicio.component.css']
 })
-export class InicioComponent {
+export class InicioComponent implements OnInit{
 
 productos:IProductos[] =[];
 
@@ -21,7 +21,6 @@ productos:IProductos[] =[];
 
   obtenerProductos() {
     this._productsService.listarProducto().subscribe(data => {
-      console.log(data);
       this.productos = data;
     })
   }

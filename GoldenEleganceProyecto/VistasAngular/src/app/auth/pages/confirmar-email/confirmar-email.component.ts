@@ -30,27 +30,6 @@ export class ConfirmarEmailComponent implements OnInit{
 
   confirmarCuenta() {
     this.authS.confirmarCuenta(this.confirmarObj)
-      .subscribe({
-        next: (res) => {
-          Swal.fire({
-            position: 'top-end',
-            icon: 'success',
-            title: res.message,
-            showConfirmButton: false,
-            timer: 1500,
-          });
-          this.route.navigate(['login']);
-        },
-        error: (err) => {
-          Swal.fire({
-            position: 'top-end',
-            icon: 'warning',
-            title: err ,
-            showConfirmButton: false,
-            timer: 1500,
-          });
-        }
-      })
   }
 }
 
