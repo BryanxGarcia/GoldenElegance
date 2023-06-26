@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace GoldenEleganceProyecto.Migrations
 {
-    public partial class v1 : Migration
+    public partial class version : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -80,6 +80,8 @@ namespace GoldenEleganceProyecto.Migrations
                     Password = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Token = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     EmailConfirmed = table.Column<bool>(type: "bit", nullable: false),
+                    ConfirmarEmailToken = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ConfirmarEmailExpiry = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Telefono = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Direccion = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     FKRol = table.Column<int>(type: "int", nullable: false),
