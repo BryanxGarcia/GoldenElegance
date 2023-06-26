@@ -56,8 +56,8 @@ namespace GoldenEleganceProyecto.Controllers
                 response.Message = "No hay producto con ese Id";
                 return BadRequest(response);
             }
-            var modelo = await _productosServicio.ObtenerPorId(Id);
-            return Ok(modelo);
+            var producto = await _productosServicio.ObtenerPorId(Id);
+            return Ok(producto);
         }
 
         /// <summary>
@@ -87,7 +87,7 @@ namespace GoldenEleganceProyecto.Controllers
         public async Task<IActionResult> EditarProducto(Productos vmProducto)
         {
             ResponseHelper response = await _productosServicio.EditarProducto(vmProducto);
-            if (!response.Success)
+            if (response.Success == false)
             {
                 return BadRequest(response);
             }
