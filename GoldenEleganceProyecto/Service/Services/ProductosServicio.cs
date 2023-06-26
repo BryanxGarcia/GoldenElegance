@@ -3,6 +3,7 @@ using GoldenEleganceProyecto.Models;
 using GoldenEleganceProyecto.Models.Helpers;
 using GoldenEleganceProyecto.Service.IServices;
 using Microsoft.EntityFrameworkCore;
+using Org.BouncyCastle.Ocsp;
 
 namespace GoldenEleganceProyecto.Service.Services
 {
@@ -17,19 +18,96 @@ namespace GoldenEleganceProyecto.Service.Services
 
         }
 
-        public Task<ResponseHelper> CrearProducto(Productos vm)
+        public async Task<ResponseHelper> CrearProducto(Productos producto)
         {
-            throw new NotImplementedException();
+
+            try
+            {
+                if (producto == null)
+                    return new ResponseHelper { Success = false, Message = "Necesitas rellenar los campos solicitados" };
+
+                producto.RowVersion = DateTime.Now;
+                producto.IsDeleted = false;
+              
+                var resp = await _context.Productos.AddAsync(producto);
+                var respu = await _context.SaveChangesAsync();
+                if (resp != null && respu > 0)
+                {
+                    return new ResponseHelper { Success = true, Message = "El producto fue creado correctamente" };
+
+                }
+                else
+                {
+                    return new ResponseHelper { Success = false, Message = "El producto no fue creado correctamente" };
+
+                }
+            }
+            catch (Exception ex)
+            {
+                return new ResponseHelper { Success = false, Message = ex.Message };
+
+
+            }
         }
 
-        public Task<ResponseHelper> EditarProducto(Productos vm)
+        public async Task<ResponseHelper> EditarProducto(Productos producto)
         {
-            throw new NotImplementedException();
+            try
+            {
+                if (producto == null)
+                    return new ResponseHelper { Success = false, Message = "Necesitas rellenar los campos solicitados" };
+
+                Productos productoA = new Productos();
+                productoA = await _context.Productos.FirstOrDefaultAsync(x => x.PkProducto == producto.PkProducto);
+                productoA.NombreProducto = producto.NombreProducto;
+                productoA.Descripcion = producto.Descripcion;
+                productoA.Inventario = producto.Inventario;
+                productoA.PrecioVenta = producto.PrecioVenta;
+                productoA.FKCategoria = producto.FKCategoria;
+                productoA.Imagen = producto.Imagen;
+                productoA.RowVersion = DateTime.Now;
+
+                var resp = _context.Productos.Update(productoA);
+                var respu = await _context.SaveChangesAsync();
+
+                if (resp != null && respu > 0)
+                {
+                    return new ResponseHelper { Success = true, Message = "El producto se edito correctamente" };
+
+                }
+                else
+                {
+                    return new ResponseHelper { Success = false, Message = "El producto no se aplicaron los cambios" };
+
+                }
+            }
+            catch (Exception ex)
+            {
+                return new ResponseHelper { Success = false, Message = ex.Message };
+
+
+            }
         }
 
-        public Task<ResponseHelper> EliminarProducto(int? Id)
+        public async Task<ResponseHelper> EliminarProducto(int? Id)
         {
-            throw new NotImplementedException();
+            Productos producto = new Productos();
+            producto = await _context.Productos.FirstOrDefaultAsync(x => x.PkProducto == Id);
+
+            var resp = _context.Productos.Remove(producto);
+            var respu = await _context.SaveChangesAsync();
+
+            if (resp != null && respu > 0)
+            {
+                return new ResponseHelper { Success = true, Message = "El producto fue eliminado correctamente" };
+
+            }
+            else
+            {
+                return new ResponseHelper { Success = false, Message = "El producto no fue eliminado" };
+
+            }
+
         }
 
         public async Task<List<Productos>> ObtenerLista()
@@ -40,9 +118,12 @@ namespace GoldenEleganceProyecto.Service.Services
             return lista;
         }
 
-        public Task<Productos> ObtenerPorId(int? Id)
+        public async Task<Productos> ObtenerPorId(int? Id)
         {
-            throw new NotImplementedException();
+            Productos producto = new Productos();
+
+            producto = await _context.Productos.FirstOrDefaultAsync(x => x.PkProducto == Id);
+            return producto;
         }
     }
 }
