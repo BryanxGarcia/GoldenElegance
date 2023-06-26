@@ -1,9 +1,9 @@
 export interface IProductos{
-    id?:number,
+    id:number,
     nombreProducto: string,
     descripcion: string,
     categoria: string,
     precioVenta: number,
     inventario: number,
     imagen: string
-};
+}

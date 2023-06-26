@@ -5,6 +5,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { IProductos } from 'src/app/models/IProductos.interface.';
+import { IResponse } from 'src/app/models/IResponse.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,7 @@ import { IProductos } from 'src/app/models/IProductos.interface.';
 export class ProductsService {
 
   private baseUrl: string = environment.serverUrl;
-  private controller: string = '/api/Productos';
+  private controller = '/api/Productos';
 
   constructor(private http: HttpClient, private router: Router) { }
 
@@ -21,19 +22,19 @@ export class ProductsService {
   }
 
   crearProducto(FormProducto: FormGroup){
-    return this.http.post<any>(`${this.baseUrl}${this.controller}/crearProducto`, FormProducto);
+    return this.http.post<IResponse>(`${this.baseUrl}${this.controller}/crearProducto`, FormProducto);
   }
 
   editarProducto(FormProducto: FormGroup){
-    return this.http.post<any>(`${this.baseUrl}${this.controller}/actualizarProducto`, FormProducto);
+    return this.http.post<IResponse>(`${this.baseUrl}${this.controller}/actualizarProducto`, FormProducto);
   }
 
   buscarPorId(){
-    return this.http.get<any>(`${this.baseUrl}${this.controller}/{Id}`);
+    return this.http.get<IProductos>(`${this.baseUrl}${this.controller}/{Id}`);
   }
 
   eliminarProducto(){
-    return this.http.delete<any>(`${this.baseUrl}${this.controller}/eliminar/{Id}`);
+    return this.http.delete<IResponse>(`${this.baseUrl}${this.controller}/eliminar/{Id}`);
   }
 
 }
