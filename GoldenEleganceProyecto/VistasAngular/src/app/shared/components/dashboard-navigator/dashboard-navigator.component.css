@@ -3,7 +3,8 @@
   position: fixed;
   top: 0;
   left: 0;
-  width: 225px;
+  width: 20%;
+  flex: 0 0 20%;
   height: 100%;
   padding: 20px 0;
   transition: all 0.5s ease;
@@ -23,12 +24,15 @@
 
 .wrapper .sidebar .profile h3{
   color: #ffffff;
+  font-family: cursive;
   margin: 10px 0 5px;
 }
 
 .wrapper .sidebar .profile p{
   color: rgb(206, 240, 253);
   font-size: 14px;
+  font-family: cursive;
+
 }
 .wrapper .sidebar ul li a{
   display: block;
@@ -38,6 +42,8 @@
   font-size: 16px;
   position: relative;
   text-decoration: none;
+  font-family: cursive;
+
 
 }
 

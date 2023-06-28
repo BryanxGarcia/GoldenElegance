@@ -1,0 +1,46 @@
+.container {
+    display: flex;
+    font-family: cursive;
+  
+  }
+  .conts {
+    flex: 1;
+    margin-left: 21%;
+    margin-right: 1%;
+    background-color: #dcdcdc;
+  }
+  
+  .cardarriba {
+      width: 100%;
+      background-color: rgb(255, 255, 255);
+      padding: 16px;
+      font-family: cursive;
+  
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    
+    .cardcontent {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+    
+    .text {
+      margin-right: 16px;
+      font-family:Arial, Helvetica, sans-serif;
+    }
+    
+    .button {
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+  
+    p-button{
+      padding: 1%;
+    }
+    
+  

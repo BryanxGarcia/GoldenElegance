@@ -10,6 +10,10 @@ import { ListarUsuarioComponent } from './pages/usuarios/listar-usuario/listar-u
 import { ListarCategoriaComponent } from './pages/categorias/listar-categoria/listar-categoria.component';
 import { ListarRolesComponent } from './pages/roles/listar-roles/listar-roles.component';
 import { NotFoundComponent } from '../shared/components/not-found/not-found.component';
+import { CrearUsuarioComponent } from './pages/usuarios/crear-usuario/crear-usuario.component';
+import { EditarUsuarioComponent } from './pages/usuarios/editar-usuario/editar-usuario.component';
+import { CrearRolComponent } from './pages/roles/crear-rol/crear-rol.component';
+import { EditarRolComponent } from './pages/roles/editar-rol/editar-rol.component';
 
 
 const routes: Routes = [
@@ -67,7 +71,22 @@ const routes: Routes = [
     data: {
       title: 'Inicio',
     }
-  },  {
+  },
+  {
+    path: 'usuario/crear',
+    component: CrearUsuarioComponent,
+    data: {
+      title: 'Crear usuario',
+    }
+  },
+  {
+    path: 'usuario/editar/:id',
+    component: EditarUsuarioComponent,
+    data: {
+      title: 'Editar usuario',
+    }
+  },
+    {
     path: 'categorias',
     component: ListarCategoriaComponent,
     data: {
@@ -80,7 +99,19 @@ const routes: Routes = [
       title: 'Roles',
     }
   },
-  
+  {
+    path: 'roles/crear',
+    component: CrearRolComponent,
+    data: {
+      title: 'Crear rol',
+    }
+  },{
+    path: 'roles/editar/:id',
+    component: EditarRolComponent,
+    data: {
+      title: 'Editar rol',
+    }
+  },
   {
     path: '**',
     redirectTo: 'login'
