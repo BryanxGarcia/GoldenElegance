@@ -17,7 +17,7 @@ export class RolesService {
   
   listarRol(): Observable<IRoles[]> {
     return this.http.get<IRoles[]>(`${this.baseUrl}${this.controller}/roles`);
-  };
+  }
 
   registrarRol(FormRCrearRol: FormGroup) {
     return this.http.post<IResponse>(`${this.baseUrl}${this.controller}/crearRol`, FormRCrearRol).pipe(
@@ -146,6 +146,6 @@ export class RolesService {
   }
 
   buscarPorId(id: number){
-    return this.http.get<IRoles>(`${this.baseUrl}${this.controller}/roles/${id}`);
+    return this.http.get<IRoles>(`${this.baseUrl}${this.controller}/roles/${id}`)
   }
 }

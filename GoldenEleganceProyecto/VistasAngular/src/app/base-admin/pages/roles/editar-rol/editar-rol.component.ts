@@ -10,7 +10,7 @@ import { RolesService } from 'src/app/services/roles/roles.service';
   styleUrls: ['./editar-rol.component.css']
 })
 export class EditarRolComponent implements OnInit {
-  id: number = 0;
+  id= 0;
   Roles: IRoles={
     pkRol: 0,
     nombre: '',
