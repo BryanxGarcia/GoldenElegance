@@ -29,6 +29,8 @@ export class AuthService {
 
 
   registrarse(FormRegistro: FormGroup) {
+    console.log(FormRegistro);
+    
     return this.http.post<IResponse>(`${this.baseUrl}${this.controller}/Registro`, FormRegistro).pipe(
       catchError((error: HttpErrorResponse) => {
         let response: IResponse = {

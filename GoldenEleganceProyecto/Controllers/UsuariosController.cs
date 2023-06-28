@@ -11,11 +11,14 @@ namespace GoldenEleganceProyecto.Controllers
     [Route("api/[controller]")]
     public class UsuariosController : ControllerBase
     {
+        private readonly IEmailService _emailService;
         private readonly IUsuariosServicio _usuariosServicio;
 
-        public UsuariosController(IUsuariosServicio usuariosServicio)
+        public UsuariosController(IUsuariosServicio usuariosServicio, IEmailService emailService)
         {
             _usuariosServicio = usuariosServicio;
+            _emailService = emailService;
+
         }
 
 
@@ -61,14 +64,20 @@ namespace GoldenEleganceProyecto.Controllers
         /// <returns>ResponseHelper</returns>
         [HttpPost]
         [Route("crearUsuario")]
-        public async Task<IActionResult> CrearUsuario(Usuarios vmUsuarios)
+        public async Task<IActionResult> CrearUsuario([FromBody] Usuarios vmUsuarios)
         {
-            ResponseHelper response = await _usuariosServicio.CrearUsuario(vmUsuarios);
-            if (!response.Success)
+            if (vmUsuarios == null)
+                return BadRequest();
+
+            var responseHelper = await _usuariosServicio.CrearUsuario(vmUsuarios);
+
+
+            if (responseHelper.Success == true)
             {
-                return BadRequest(response);
+                var enviarEmail = await _emailService.SendEmailConfirmacionCorreo(vmUsuarios.Correo);
             }
-            return Ok(response);
+
+            return Ok(responseHelper);
         }
 
         /// <summary>

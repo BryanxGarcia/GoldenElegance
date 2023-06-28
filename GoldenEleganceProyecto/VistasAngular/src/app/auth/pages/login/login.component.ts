@@ -1,11 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
-import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
-import { IResponseToken } from '../../../models/IResponseToken.interface';
-import { catchError, of } from 'rxjs';
-import { HttpErrorResponse } from '@angular/common/http';
 import { UserStoreService } from 'src/app/services/Usuarios/user-store.service';
 
 @Component({
@@ -17,8 +13,6 @@ export class LoginComponent {
   constructor(
     private fb: FormBuilder,
     private auth: AuthService,
-    private route: Router,
-    private userStoreS: UserStoreService
   ) { }
   role = "";
   claseDiv = 'container';
@@ -46,7 +40,7 @@ export class LoginComponent {
 
   onLogin() {
     if (this.loginForm.valid) {
-      this.auth.iniciarSesion(this.loginForm.value)
+      this.auth.iniciarSesion(this.loginForm.value);
     }
   }
   onSingUp() {
