@@ -14,6 +14,7 @@ import { CrearUsuarioComponent } from './pages/usuarios/crear-usuario/crear-usua
 import { EditarUsuarioComponent } from './pages/usuarios/editar-usuario/editar-usuario.component';
 import { CrearRolComponent } from './pages/roles/crear-rol/crear-rol.component';
 import { EditarRolComponent } from './pages/roles/editar-rol/editar-rol.component';
+import { PerfilUsuarioComponent } from './pages/perfil-usuario/perfil-usuario.component';
 
 
 const routes: Routes = [
@@ -50,6 +51,12 @@ const routes: Routes = [
     component: DashboardComponent,
     data: {
       title: 'Dashboard',
+    }
+  }, {
+    path: 'perfil',
+    component: PerfilUsuarioComponent,
+    data: {
+      title: 'Mi perfil',
     }
   },
   {
