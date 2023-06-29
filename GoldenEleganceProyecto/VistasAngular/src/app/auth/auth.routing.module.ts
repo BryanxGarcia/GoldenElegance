@@ -60,7 +60,7 @@ const routes: Routes = [
   },
   {
     path: '**',
-    redirectTo: 'NotFound'
+    redirectTo: 'login'
   }
 ];
 
