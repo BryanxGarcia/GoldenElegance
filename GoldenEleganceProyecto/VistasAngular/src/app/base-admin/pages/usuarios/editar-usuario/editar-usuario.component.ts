@@ -10,7 +10,7 @@ import { UserStoreService } from 'src/app/services/Usuarios/user-store.service';
   styleUrls: ['./editar-usuario.component.css']
 })
 export class EditarUsuarioComponent implements OnInit {
-  id: number = 0;
+  id= 0;
   Usuario: IUsuario = {
     PkUsuario: 0,
     nombre: '',

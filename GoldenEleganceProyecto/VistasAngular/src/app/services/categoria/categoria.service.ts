@@ -12,15 +12,15 @@ import Swal from 'sweetalert2';
 })
 export class CategoriaService {
   private baseUrl: string = environment.serverUrl;
-  private controller = '/api/Roles';
+  private controller = '/api/Categorias';
   constructor(private http: HttpClient) { }
   
-  listarUsuarios(): Observable<ICategoria[]> {
-    return this.http.get<ICategoria[]>(`${this.baseUrl}${this.controller}/usuarios`);
-  };
+  listarCategorias(): Observable<ICategoria[]> {
+    return this.http.get<ICategoria[]>(`${this.baseUrl}${this.controller}/categorias`);
+  }
 
-  registrarse(FormRegistro: FormGroup) {
-    return this.http.post<IResponse>(`${this.baseUrl}${this.controller}/crearUsuario`, FormRegistro).pipe(
+  registrarcategoria(FormCategoria: FormGroup) {
+    return this.http.post<IResponse>(`${this.baseUrl}${this.controller}/crearCategoria`, FormCategoria).pipe(
       catchError((error: HttpErrorResponse) => {
         let response: IResponse = {
           success: false,
@@ -61,7 +61,7 @@ export class CategoriaService {
       });
   }
 
-  eliminarUsuario(id: number) {
+  eliminarCategoria(id: number) {
     return this.http.delete<IResponse>(`${this.baseUrl}${this.controller}/eliminar/${id}`).pipe(
       catchError((error: HttpErrorResponse) => {
         let response: IResponse = {
@@ -103,8 +103,8 @@ export class CategoriaService {
       });
   }
 
-  editarUsuario(FormEditar: ICategoria){
-    return this.http.post<IResponse>(`${this.baseUrl}${this.controller}/actualizarUsuario`, FormEditar).pipe(
+  editarCategoria(FormEditar: ICategoria){
+    return this.http.post<IResponse>(`${this.baseUrl}${this.controller}/actualizarCategoria`, FormEditar).pipe(
       catchError((error: HttpErrorResponse) => {
         let response: IResponse = {
           success: false,
@@ -146,6 +146,6 @@ export class CategoriaService {
   }
 
   buscarPorId(id: number){
-    return this.http.get<ICategoria>(`${this.baseUrl}${this.controller}/usuario/${id}`);
+    return this.http.get<ICategoria>(`${this.baseUrl}${this.controller}/categoria/${id}`);
   }
 }

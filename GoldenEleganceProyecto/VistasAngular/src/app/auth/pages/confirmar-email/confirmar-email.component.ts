@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmarEmail } from 'src/app/models/confirmarEmail.model';
 import { AuthService } from 'src/app/services/auth.service';
-import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-confirmar-email',

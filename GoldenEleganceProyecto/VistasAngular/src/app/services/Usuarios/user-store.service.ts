@@ -20,7 +20,7 @@ export class UserStoreService {
 
   listarUsuarios(): Observable<IUsuario[]> {
     return this.http.get<IUsuario[]>(`${this.baseUrl}${this.controller}/usuarios`);
-  };
+  }
 
   registrarse(FormRegistro: FormGroup) {
     return this.http.post<IResponse>(`${this.baseUrl}${this.controller}/crearUsuario`, FormRegistro).pipe(
@@ -127,7 +127,7 @@ export class UserStoreService {
           Swal.fire({
             position: 'top-end',
             icon: 'success',
-            title: 'Usuario eliminado correctamente',
+            title: 'Usuario editado correctamente',
             text: response.message,
             showConfirmButton: false,
             timer: 1500,
@@ -139,7 +139,7 @@ export class UserStoreService {
           Swal.fire({
             position: 'top-end',
             icon: 'warning',
-            title: 'Usuario no eliminado',
+            title: 'Usuario no se pudo editar',
             text: response.message,
             showConfirmButton: false,
             timer: 3500,
