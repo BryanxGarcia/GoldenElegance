@@ -20,6 +20,7 @@ builder.Services.AddTransient<IRolesServicio, RolesServicio>();
 builder.Services.AddTransient<IUsuariosServicio, UsuariosServicio>();
 builder.Services.AddTransient<IVentasServicio, VentasServicio>();
 builder.Services.AddTransient<IEmailService, EmailServicio>();
+builder.Services.AddTransient<IFavoritosServicio, FavoritosServicio>();
 
 
 

@@ -21,6 +21,7 @@ import { CrearProductoComponent } from './pages/productos/crear-producto/crear-p
 import { EditarProductoComponent } from './pages/productos/editar-producto/editar-producto.component';
 
 
+
 const routes: Routes = [
   {
     path: 'carrito',

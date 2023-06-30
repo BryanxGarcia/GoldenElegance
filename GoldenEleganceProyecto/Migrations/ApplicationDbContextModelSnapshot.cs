@@ -47,6 +47,38 @@ namespace GoldenEleganceProyecto.Migrations
                     b.ToTable("Categorias");
                 });
 
+            modelBuilder.Entity("GoldenEleganceProyecto.Models.Favoritos", b =>
+                {
+                    b.Property<int>("PkFavorito")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PkFavorito"), 1L, 1);
+
+                    b.Property<int>("FKProducto")
+                        .HasColumnType("int");
+
+                    b.Property<int>("FKUsuario")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("FechaAgrego")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("RowVersion")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("PkFavorito");
+
+                    b.HasIndex("FKProducto");
+
+                    b.HasIndex("FKUsuario");
+
+                    b.ToTable("Favoritos");
+                });
+
             modelBuilder.Entity("GoldenEleganceProyecto.Models.Productos", b =>
                 {
                     b.Property<int>("PkProducto")
@@ -213,6 +245,25 @@ namespace GoldenEleganceProyecto.Migrations
                     b.HasIndex("FKUsuario");
 
                     b.ToTable("Ventas");
+                });
+
+            modelBuilder.Entity("GoldenEleganceProyecto.Models.Favoritos", b =>
+                {
+                    b.HasOne("GoldenEleganceProyecto.Models.Productos", "Producto")
+                        .WithMany()
+                        .HasForeignKey("FKProducto")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("GoldenEleganceProyecto.Models.Usuarios", "Usuario")
+                        .WithMany()
+                        .HasForeignKey("FKUsuario")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Producto");
+
+                    b.Navigation("Usuario");
                 });
 
             modelBuilder.Entity("GoldenEleganceProyecto.Models.Productos", b =>
