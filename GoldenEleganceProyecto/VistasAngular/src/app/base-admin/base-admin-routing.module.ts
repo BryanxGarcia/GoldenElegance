@@ -15,6 +15,10 @@ import { EditarUsuarioComponent } from './pages/usuarios/editar-usuario/editar-u
 import { CrearRolComponent } from './pages/roles/crear-rol/crear-rol.component';
 import { EditarRolComponent } from './pages/roles/editar-rol/editar-rol.component';
 import { PerfilUsuarioComponent } from './pages/perfil-usuario/perfil-usuario.component';
+import { CrearCategoriaComponent } from './pages/categorias/crear-categoria/crear-categoria.component';
+import { EditarCategoriaComponent } from './pages/categorias/editar-categoria/editar-categoria.component';
+import { CrearProductoComponent } from './pages/productos/crear-producto/crear-producto.component';
+import { EditarProductoComponent } from './pages/productos/editar-producto/editar-producto.component';
 
 
 const routes: Routes = [
@@ -72,6 +76,18 @@ const routes: Routes = [
     data: {
       title: 'Productos',
     }
+  },{
+    path: 'productos/crear',
+    component: CrearProductoComponent,
+    data: {
+      title: 'Crear producto',
+    }
+  },{
+    path: 'productos/editar/:id',
+    component: EditarProductoComponent,
+    data: {
+      title: 'Editar producto',
+    }
   },  {
     path: 'usuarios',
     component: ListarUsuarioComponent,
@@ -97,7 +113,20 @@ const routes: Routes = [
     path: 'categorias',
     component: ListarCategoriaComponent,
     data: {
-      title: 'Roles',
+      title: 'Categoria',
+    }
+  },
+  {
+    path: 'categoria/crear',
+    component: CrearCategoriaComponent,
+    data: {
+      title: 'Crear categoria',
+    }
+  },{
+    path: 'categoria/editar/:id',
+    component: EditarCategoriaComponent,
+    data: {
+      title: 'Editar categoria',
     }
   },  {
     path: 'roles',

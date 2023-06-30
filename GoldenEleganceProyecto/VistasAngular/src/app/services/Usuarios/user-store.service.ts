@@ -3,6 +3,7 @@ import { IUsuario } from './../../models/IUsuario.interface';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, catchError, of } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import Swal from 'sweetalert2';
@@ -16,7 +17,7 @@ export class UserStoreService {
   private controller = '/api/Usuarios';
   private username$ = new BehaviorSubject<string>("");
   private role$ = new BehaviorSubject<string>("");
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private router: Router) { }
 
   listarUsuarios(): Observable<IUsuario[]> {
     return this.http.get<IUsuario[]>(`${this.baseUrl}${this.controller}/usuarios`);
@@ -49,8 +50,8 @@ export class UserStoreService {
             timer: 1500,
           });
           setTimeout(() => {
-            location.reload(); // Recargar la página después de 2 minutos
-          }, 5000);
+            this.router.navigate(['base/usuarios']);
+          }, 2000);
         } else {
           Swal.fire({
             position: 'top-end',
@@ -92,7 +93,7 @@ export class UserStoreService {
           });
           setTimeout(() => {
             location.reload(); // Recargar la página después de 2 minutos
-          }, 5000);
+          }, 2000);
         } else {
           Swal.fire({
             position: 'top-end',
@@ -133,8 +134,8 @@ export class UserStoreService {
             timer: 1500,
           });
           setTimeout(() => {
-            location.reload(); // Recargar la página después de 2 minutos
-          }, 5000);
+            this.router.navigate(['base/usuarios']);
+          }, 2000);
         } else {
           Swal.fire({
             position: 'top-end',

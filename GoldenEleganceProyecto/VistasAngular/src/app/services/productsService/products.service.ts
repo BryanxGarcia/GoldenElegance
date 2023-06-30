@@ -49,8 +49,8 @@ export class ProductsService {
             timer: 1500,
           });
           setTimeout(() => {
-            location.reload(); // Recargar la página después de 2 minutos
-          }, 5000);
+            this.router.navigate(['base/productos']);
+          }, 2000);
         } else {
           Swal.fire({
             position: 'top-end',
@@ -63,7 +63,7 @@ export class ProductsService {
         }
       });
   }
-  editarProducto(FormProducto: FormGroup){
+  editarProducto(FormProducto: IProductos){
     return this.http.post<IResponse>(`${this.baseUrl}${this.controller}/actualizarProducto`, FormProducto).pipe(
       catchError((error: HttpErrorResponse) => {
         let response: IResponse = {
@@ -90,8 +90,8 @@ export class ProductsService {
             timer: 1500,
           });
           setTimeout(() => {
-            location.reload(); // Recargar la página después de 2 minutos
-          }, 5000);
+            this.router.navigate(['base/productos']);
+          }, 2000);
         } else {
           Swal.fire({
             position: 'top-end',
@@ -111,6 +111,7 @@ export class ProductsService {
  
 
   eliminarProducto(id: number){
+    console.log(id);
     return this.http.delete<IResponse>(`${this.baseUrl}${this.controller}/eliminar/${id}`).pipe(
       catchError((error: HttpErrorResponse) => {
         let response: IResponse = {
@@ -131,19 +132,19 @@ export class ProductsService {
           Swal.fire({
             position: 'top-end',
             icon: 'success',
-            title: 'Usuario eliminado correctamente',
+            title: 'Producto eliminado correctamente',
             text: response.message,
             showConfirmButton: false,
             timer: 1500,
           });
           setTimeout(() => {
             location.reload(); // Recargar la página después de 2 minutos
-          }, 5000);
+          }, 1500);
         } else {
           Swal.fire({
             position: 'top-end',
             icon: 'warning',
-            title: 'Usuario no eliminado',
+            title: 'Producto no eliminado',
             text: response.message,
             showConfirmButton: false,
             timer: 3500,

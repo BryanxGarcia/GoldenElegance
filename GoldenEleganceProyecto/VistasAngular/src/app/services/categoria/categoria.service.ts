@@ -1,6 +1,7 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Observable, catchError, of } from 'rxjs';
 import { ICategoria } from 'src/app/models/ICategoria.interface';
 import { IResponse } from 'src/app/models/IResponse.interface';
@@ -13,13 +14,13 @@ import Swal from 'sweetalert2';
 export class CategoriaService {
   private baseUrl: string = environment.serverUrl;
   private controller = '/api/Categorias';
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private router:Router) { }
   
   listarCategorias(): Observable<ICategoria[]> {
     return this.http.get<ICategoria[]>(`${this.baseUrl}${this.controller}/categorias`);
   }
 
-  registrarcategoria(FormCategoria: FormGroup) {
+  registrarcategoria(FormCategoria: FormGroup){
     return this.http.post<IResponse>(`${this.baseUrl}${this.controller}/crearCategoria`, FormCategoria).pipe(
       catchError((error: HttpErrorResponse) => {
         let response: IResponse = {
@@ -40,19 +41,19 @@ export class CategoriaService {
           Swal.fire({
             position: 'top-end',
             icon: 'success',
-            title: 'Usuario registrado correctamente',
+            title: 'Categoria registrado correctamente',
             text: response.message,
             showConfirmButton: false,
             timer: 1500,
           });
           setTimeout(() => {
-            location.reload(); // Recargar la página después de 2 minutos
-          }, 5000);
+            this.router.navigate(['base/categorias']);
+          }, 2000);
         } else {
           Swal.fire({
             position: 'top-end',
             icon: 'warning',
-            title: 'Usuario no registrado',
+            title: 'Categoria no registrada',
             text: response.message,
             showConfirmButton: false,
             timer: 3500,
@@ -82,7 +83,7 @@ export class CategoriaService {
           Swal.fire({
             position: 'top-end',
             icon: 'success',
-            title: 'Usuario eliminado correctamente',
+            title: 'Categoria eliminada correctamente',
             text: response.message,
             showConfirmButton: false,
             timer: 1500,
@@ -94,7 +95,7 @@ export class CategoriaService {
           Swal.fire({
             position: 'top-end',
             icon: 'warning',
-            title: 'Usuario no eliminado',
+            title: 'Categoria no eliminada',
             text: response.message,
             showConfirmButton: false,
             timer: 3500,
@@ -124,19 +125,19 @@ export class CategoriaService {
           Swal.fire({
             position: 'top-end',
             icon: 'success',
-            title: 'Usuario eliminado correctamente',
+            title: 'Categoria editada correctamente',
             text: response.message,
             showConfirmButton: false,
             timer: 1500,
           });
           setTimeout(() => {
-            location.reload(); // Recargar la página después de 2 minutos
-          }, 5000);
+            this.router.navigate(['base/categorias']);
+          }, 2000);
         } else {
           Swal.fire({
             position: 'top-end',
             icon: 'warning',
-            title: 'Usuario no eliminado',
+            title: 'Categoria no actualizada',
             text: response.message,
             showConfirmButton: false,
             timer: 3500,
