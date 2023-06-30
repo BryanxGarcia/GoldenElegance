@@ -13,6 +13,7 @@ namespace GoldenEleganceProyecto.Context
         public DbSet<Usuarios> Usuario { get; set; }
         public DbSet<Productos> Productos { get; set; }
         public DbSet<Venta> Ventas { get; set; }
+        public DbSet<Favoritos> Favoritos { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
 
