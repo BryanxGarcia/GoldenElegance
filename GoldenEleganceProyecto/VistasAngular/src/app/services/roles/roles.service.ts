@@ -1,6 +1,7 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Observable, catchError, of } from 'rxjs';
 import { IResponse } from 'src/app/models/IResponse.interface';
 import { IRoles } from 'src/app/models/IRoles.interface';
@@ -13,7 +14,7 @@ import Swal from 'sweetalert2';
 export class RolesService {
   private baseUrl: string = environment.serverUrl;
   private controller = '/api/Roles';
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,private router: Router) { }
   
   listarRol(): Observable<IRoles[]> {
     return this.http.get<IRoles[]>(`${this.baseUrl}${this.controller}/roles`);
@@ -46,8 +47,8 @@ export class RolesService {
             timer: 1500,
           });
           setTimeout(() => {
-            location.reload(); // Recargar la página después de 2 minutos
-          }, 5000);
+            this.router.navigate(['base/roles']);
+          }, 2000);
         } else {
           Swal.fire({
             position: 'top-end',
@@ -89,7 +90,7 @@ export class RolesService {
           });
           setTimeout(() => {
             location.reload(); // Recargar la página después de 2 minutos
-          }, 5000);
+          }, 2000);
         } else {
           Swal.fire({
             position: 'top-end',
@@ -130,7 +131,7 @@ export class RolesService {
             timer: 1500,
           });
           setTimeout(() => {
-            location.reload(); // Recargar la página después de 2 minutos
+            this.router.navigate(['base/roles']);
           }, 5000);
         } else {
           Swal.fire({

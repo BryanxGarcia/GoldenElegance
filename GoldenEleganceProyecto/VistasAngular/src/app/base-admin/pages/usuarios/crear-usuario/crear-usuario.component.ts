@@ -27,7 +27,6 @@ export class CrearUsuarioComponent {
 
   registrarUsuario() {
     if (this.sigUpForm.valid) {
-      console.log(this.sigUpForm.value);
       this.userService.registrarse(this.sigUpForm.value);
     }
   }

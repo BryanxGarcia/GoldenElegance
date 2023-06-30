@@ -60,18 +60,19 @@ namespace GoldenEleganceProyecto.Service.Services
                 CatAnadir.NombreCat = categoria.NombreCat;
                 CatAnadir.Descripcion = categoria.Descripcion;
                 CatAnadir.RowVersion = DateTime.Now;
+                CatAnadir.IsDeleted = false;
 
                 var resp = _context.Categorias.Update(CatAnadir);
                 var respu = await _context.SaveChangesAsync();
 
                 if (resp != null && respu > 0)
                 {
-                    return new ResponseHelper { Success = true, Message = "El producto fue creado correctamente" };
+                    return new ResponseHelper { Success = true, Message = "La categoria fue editada correctamente" };
 
                 }
                 else
                 {
-                    return new ResponseHelper { Success = false, Message = "El producto no fue creado correctamente" };
+                    return new ResponseHelper { Success = false, Message = "La categoria no fue actualizada correctamente" };
 
                 }
             }
@@ -85,22 +86,25 @@ namespace GoldenEleganceProyecto.Service.Services
 
         public async Task<ResponseHelper> EliminarCategoria(int? Id)
         {
-            Categoria categoria = new Categoria();
-            categoria = await _context.Categorias.FirstOrDefaultAsync(x => x.PkCategoria == Id);
+            ResponseHelper response = new();
+            var producto = await (from consulta in _context.Productos where consulta.FKCategoria == Id select consulta).ToListAsync();
 
-            var resp = _context.Categorias.Remove(categoria);
-            var respu = await _context.SaveChangesAsync();
-
-            if (resp != null && respu > 0)
+            if (producto.Count == 0 || producto == null)
             {
-                return new ResponseHelper { Success = true, Message = "La categoria fue eliminada correctamente" };
+                var modal = await _context.Categorias.FindAsync(Id);
+                modal.IsDeleted = true;
+                _context.Categorias.Update(modal);
+                await _context.SaveChangesAsync();
 
+                response.Success = true;
+                response.Message = "La categoria se ha eliminado correctamente!!!";
             }
             else
             {
-                return new ResponseHelper { Success = false, Message = "La categoria no pudo ser eliminada" };
-
+                response.Success = false;
+                response.Message = "Categoria asignada a productos";
             }
+            return response;
         }
 
         public async Task<List<Categoria>> ObtenerLista()

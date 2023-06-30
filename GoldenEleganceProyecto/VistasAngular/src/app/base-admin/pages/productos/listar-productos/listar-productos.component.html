@@ -1,0 +1,36 @@
+<div class="container">
+
+    <app-dashboard-navigator></app-dashboard-navigator>
+    <div class="conts">
+            <p-table [value]="Prductos" [paginator]="true" [rows]="5" >
+                <ng-template pTemplate="caption">
+                    <div class="cardcontent">
+                        Productos
+                        <p-button icon="pi pi-user-plus" styleClass="p-button-success" routerLink="/base/productos/crear"></p-button>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th>Nombre producto</th>
+                        <th>Descripcion</th>
+                        <th>Precio</th>
+                        <th>Inventario</th>
+                        <th>Funciones</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-usuarios>
+                    <tr>
+                        <td>{{ usuarios.nombreProducto }}</td>
+                        <td>{{ usuarios.descripcion }}</td>
+                        <td>{{ usuarios.precioVenta }}</td>
+                        <td>{{ usuarios.inventario }}</td>
+                        <td>
+                            <p-button icon="pi pi-pencil" styleClass="p-button-help"  (click)="irAProducto(usuarios.pkProducto)" ></p-button>
+                            <p-button icon="pi pi-trash"  styleClass="p-button-danger"  (click)="eliminar(usuarios.pkProducto)"></p-button>
+    
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+    </div>

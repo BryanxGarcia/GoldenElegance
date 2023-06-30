@@ -26,11 +26,11 @@ export class EditarRolComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.id = params['id'];
     });
-    this.obtenerUsuario();
+    this.obtenerRol();
     
   }
 
-  obtenerUsuario(){
+  obtenerRol(){
     this.rolesService.buscarPorId(this.id).subscribe(
       (response) => {
         this.Roles = response;

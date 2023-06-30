@@ -46,7 +46,6 @@ namespace GoldenEleganceProyecto.Service.Services
                     return new ResponseHelper { Success = false, Message = checkpass.ToString() };
 
 
-                usuario.FKRol = 2;
                 usuario.RowVersion = DateTime.Now;
                 usuario.EmailConfirmed = false;
                 usuario.IsDeleted = false;
@@ -85,12 +84,8 @@ namespace GoldenEleganceProyecto.Service.Services
                     return new ResponseHelper { Success = false, Message = "Necesitas rellenar los campos solicitados" };
 
                 //Checar Username
-                if (await CheckUsernameExist(vm.Username))
-                    return new ResponseHelper { Success = false, Message = "Username ya esta en uso" };
-
-                //Checar Email
-                if (await CheckEmailExist(vm.Correo))
-                    return new ResponseHelper { Success = false, Message = "Correo electronico ya esta en uso" };
+                //if (await CheckUsernameExist(vm.Username))
+                //    return new ResponseHelper { Success = false, Message = "Username ya esta en uso" };
 
 
                 //Checar contraseña

@@ -19,6 +19,7 @@ namespace GoldenEleganceProyecto.Context
 
             builder.Entity<Usuarios>().HasQueryFilter(x => !x.IsDeleted);
             builder.Entity<Rol>().HasQueryFilter(x => !x.IsDeleted);
+            builder.Entity<Categoria>().HasQueryFilter(x => !x.IsDeleted);
             builder.Entity<Productos>().HasQueryFilter(x => !x.IsDeleted);
             builder.Entity<Venta>().HasQueryFilter(x => !x.IsDeleted);
 

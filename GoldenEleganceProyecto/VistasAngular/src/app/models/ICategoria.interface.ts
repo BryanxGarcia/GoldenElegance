@@ -1,5 +1,5 @@
 export interface ICategoria{
-    pkRol:number,
-    nombre: string,
+    pkCategoria:number,
+    nombreCat: string,
     descripcion: string,
 }
