@@ -1,5 +1,3 @@
-
-
 .navi {
     font-family: "Montserrat", sans-serif;
     display: flex;
@@ -16,27 +14,26 @@
     z-index: 2;
 }
 
-    .navi ul {
-        display: flex;
-        gap: 40px;
-    }
+.navi ul {
+    display: flex;
+    gap: 40px;
+}
 
-    .navi ul,
-    li
-     {
-        color: white;
-        text-decoration: none;
-        list-style: none;
-        text-transform: uppercase;
-        letter-spacing: 15px;
-        font-size: 12px;
-        transition: ease-in-out .4s;
-    }
+.navi ul,
+li {
+    color: white;
+    text-decoration: none;
+    list-style: none;
+    text-transform: uppercase;
+    letter-spacing: 15px;
+    font-size: 12px;
+    transition: ease-in-out .4s;
+}
 
-    .navi h1 {
-        text-transform: uppercase;
-        color: white;
-    }
+.navi h1 {
+    text-transform: uppercase;
+    color: white;
+}
 
 .nava {
     color: white;
@@ -47,10 +44,21 @@
     font-size: 12px;
     transition: ease-in-out .4s;
 }
-    .nava:hover {
-        color: yellow;
-    }
-    .navi ul,
-    li {
-        color: yellow;
-    }
+
+.nava:hover {
+    color: yellow;
+}
+
+.navi ul,
+li {
+    color: yellow;
+}
+
+.pi-user, .pi-shopping-cart{
+    color: white;
+    margin-left: 50px;
+}
+
+.user-section{
+    padding: 20px;
+}

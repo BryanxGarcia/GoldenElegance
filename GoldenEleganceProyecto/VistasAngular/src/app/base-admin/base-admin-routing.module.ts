@@ -11,7 +11,15 @@ import { ListarCategoriaComponent } from './pages/categorias/listar-categoria/li
 import { ListarRolesComponent } from './pages/roles/listar-roles/listar-roles.component';
 import { NotFoundComponent } from '../shared/components/not-found/not-found.component';
 import { FichaProductoComponent } from './pages/ficha-producto/ficha-producto.component';
-
+import { CrearUsuarioComponent } from './pages/usuarios/crear-usuario/crear-usuario.component';
+import { EditarUsuarioComponent } from './pages/usuarios/editar-usuario/editar-usuario.component';
+import { CrearRolComponent } from './pages/roles/crear-rol/crear-rol.component';
+import { EditarRolComponent } from './pages/roles/editar-rol/editar-rol.component';
+import { PerfilUsuarioComponent } from './pages/perfil-usuario/perfil-usuario.component';
+import { CrearCategoriaComponent } from './pages/categorias/crear-categoria/crear-categoria.component';
+import { EditarCategoriaComponent } from './pages/categorias/editar-categoria/editar-categoria.component';
+import { CrearProductoComponent } from './pages/productos/crear-producto/crear-producto.component';
+import { EditarProductoComponent } from './pages/productos/editar-producto/editar-producto.component';
 
 const routes: Routes = [
   {
@@ -48,6 +56,12 @@ const routes: Routes = [
     data: {
       title: 'Dashboard',
     }
+  }, {
+    path: 'perfil',
+    component: PerfilUsuarioComponent,
+    data: {
+      title: 'Mi perfil',
+    }
   },
   {
     path: 'inicio',
@@ -62,6 +76,18 @@ const routes: Routes = [
     data: {
       title: 'Productos',
     }
+  },{
+    path: 'productos/crear',
+    component: CrearProductoComponent,
+    data: {
+      title: 'Crear producto',
+    }
+  },{
+    path: 'productos/editar/:id',
+    component: EditarProductoComponent,
+    data: {
+      title: 'Editar producto',
+    }
   },  {
     path: 'ficha',
     component: FichaProductoComponent,
@@ -74,11 +100,39 @@ const routes: Routes = [
     data: {
       title: 'Inicio',
     }
-  },  {
+  },
+  {
+    path: 'usuario/crear',
+    component: CrearUsuarioComponent,
+    data: {
+      title: 'Crear usuario',
+    }
+  },
+  {
+    path: 'usuario/editar/:id',
+    component: EditarUsuarioComponent,
+    data: {
+      title: 'Editar usuario',
+    }
+  },
+    {
     path: 'categorias',
     component: ListarCategoriaComponent,
     data: {
-      title: 'Roles',
+      title: 'Categoria',
+    }
+  },
+  {
+    path: 'categoria/crear',
+    component: CrearCategoriaComponent,
+    data: {
+      title: 'Crear categoria',
+    }
+  },{
+    path: 'categoria/editar/:id',
+    component: EditarCategoriaComponent,
+    data: {
+      title: 'Editar categoria',
     }
   },  {
     path: 'roles',
@@ -87,7 +141,19 @@ const routes: Routes = [
       title: 'Roles',
     }
   },
-  
+  {
+    path: 'roles/crear',
+    component: CrearRolComponent,
+    data: {
+      title: 'Crear rol',
+    }
+  },{
+    path: 'roles/editar/:id',
+    component: EditarRolComponent,
+    data: {
+      title: 'Editar rol',
+    }
+  },
   {
     path: '**',
     redirectTo: 'login'

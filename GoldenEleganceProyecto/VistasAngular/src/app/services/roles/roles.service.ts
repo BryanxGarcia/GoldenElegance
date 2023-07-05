@@ -1,30 +1,27 @@
-import { IResponse } from './../../models/IResponse.interface';
-import { IUsuario } from './../../models/IUsuario.interface';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { BehaviorSubject, Observable, catchError, of } from 'rxjs';
+import { Observable, catchError, of } from 'rxjs';
+import { IResponse } from 'src/app/models/IResponse.interface';
+import { IRoles } from 'src/app/models/IRoles.interface';
 import { environment } from 'src/environments/environment';
 import Swal from 'sweetalert2';
-
 
 @Injectable({
   providedIn: 'root'
 })
-export class UserStoreService {
+export class RolesService {
   private baseUrl: string = environment.serverUrl;
-  private controller = '/api/Usuarios';
-  private username$ = new BehaviorSubject<string>("");
-  private role$ = new BehaviorSubject<string>("");
-  constructor(private http: HttpClient, private router: Router) { }
-
-  listarUsuarios(): Observable<IUsuario[]> {
-    return this.http.get<IUsuario[]>(`${this.baseUrl}${this.controller}/usuarios`);
+  private controller = '/api/Roles';
+  constructor(private http: HttpClient,private router: Router) { }
+  
+  listarRol(): Observable<IRoles[]> {
+    return this.http.get<IRoles[]>(`${this.baseUrl}${this.controller}/roles`);
   }
 
-  registrarse(FormRegistro: FormGroup) {
-    return this.http.post<IResponse>(`${this.baseUrl}${this.controller}/crearUsuario`, FormRegistro).pipe(
+  registrarRol(FormRCrearRol: FormGroup) {
+    return this.http.post<IResponse>(`${this.baseUrl}${this.controller}/crearRol`, FormRCrearRol).pipe(
       catchError((error: HttpErrorResponse) => {
         let response: IResponse = {
           success: false,
@@ -44,19 +41,19 @@ export class UserStoreService {
           Swal.fire({
             position: 'top-end',
             icon: 'success',
-            title: 'Usuario registrado correctamente',
+            title: 'Rol creado correctamente',
             text: response.message,
             showConfirmButton: false,
             timer: 1500,
           });
           setTimeout(() => {
-            this.router.navigate(['base/usuarios']);
+            this.router.navigate(['base/roles']);
           }, 2000);
         } else {
           Swal.fire({
             position: 'top-end',
             icon: 'warning',
-            title: 'Usuario no registrado',
+            title: 'Rol no registrado',
             text: response.message,
             showConfirmButton: false,
             timer: 3500,
@@ -65,7 +62,7 @@ export class UserStoreService {
       });
   }
 
-  eliminarUsuario(id: number) {
+  eliminarRol(id: number) {
     return this.http.delete<IResponse>(`${this.baseUrl}${this.controller}/eliminar/${id}`).pipe(
       catchError((error: HttpErrorResponse) => {
         let response: IResponse = {
@@ -86,7 +83,7 @@ export class UserStoreService {
           Swal.fire({
             position: 'top-end',
             icon: 'success',
-            title: 'Usuario eliminado correctamente',
+            title: 'Rol eliminado correctamente',
             text: response.message,
             showConfirmButton: false,
             timer: 1500,
@@ -98,7 +95,7 @@ export class UserStoreService {
           Swal.fire({
             position: 'top-end',
             icon: 'warning',
-            title: 'Usuario no eliminado',
+            title: 'El rol no puede ser eliminado',
             text: response.message,
             showConfirmButton: false,
             timer: 3500,
@@ -107,8 +104,8 @@ export class UserStoreService {
       });
   }
 
-  editarUsuario(FormEditar: IUsuario){
-    return this.http.post<IResponse>(`${this.baseUrl}${this.controller}/actualizarUsuario`, FormEditar).pipe(
+  editarRol(FormEditar: IRoles){
+    return this.http.post<IResponse>(`${this.baseUrl}${this.controller}/actualizar`, FormEditar).pipe(
       catchError((error: HttpErrorResponse) => {
         let response: IResponse = {
           success: false,
@@ -128,19 +125,19 @@ export class UserStoreService {
           Swal.fire({
             position: 'top-end',
             icon: 'success',
-            title: 'Usuario editado correctamente',
+            title: 'Rol actualizado correctamente',
             text: response.message,
             showConfirmButton: false,
             timer: 1500,
           });
           setTimeout(() => {
-            this.router.navigate(['base/usuarios']);
-          }, 2000);
+            this.router.navigate(['base/roles']);
+          }, 5000);
         } else {
           Swal.fire({
             position: 'top-end',
             icon: 'warning',
-            title: 'Usuario no se pudo editar',
+            title: 'El rol no pudo ser actualizado',
             text: response.message,
             showConfirmButton: false,
             timer: 3500,
@@ -150,23 +147,6 @@ export class UserStoreService {
   }
 
   buscarPorId(id: number){
-    return this.http.get<IUsuario>(`${this.baseUrl}${this.controller}/usuario/${id}`);
+    return this.http.get<IRoles>(`${this.baseUrl}${this.controller}/roles/${id}`)
   }
-
-  public getRoleFromStore() {
-    return this.role$.asObservable();
-  }
-
-  public setRoleFromStore(role: string) {
-    this.role$.next(role);
-  }
-
-  public getUsernameFromStore() {
-    return this.username$.asObservable();
-  }
-
-  public setUsernameFromStore(username: string) {
-    this.username$.next(username);
-  }
-
 }

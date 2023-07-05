@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { EditarRolComponent } from './editar-rol.component';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 describe('EditarRolComponent', () => {
   let component: EditarRolComponent;
@@ -8,7 +10,9 @@ describe('EditarRolComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [EditarRolComponent]
+      declarations: [EditarRolComponent],
+      imports: [HttpClientTestingModule,  ReactiveFormsModule, FormsModule]
+
     });
     fixture = TestBed.createComponent(EditarRolComponent);
     component = fixture.componentInstance;

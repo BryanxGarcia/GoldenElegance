@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace GoldenEleganceProyecto.Migrations
 {
-    public partial class version : Migration
+    public partial class first : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -104,6 +104,35 @@ namespace GoldenEleganceProyecto.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Favoritos",
+                columns: table => new
+                {
+                    PkFavorito = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    FKUsuario = table.Column<int>(type: "int", nullable: false),
+                    FKProducto = table.Column<int>(type: "int", nullable: false),
+                    FechaAgrego = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    RowVersion = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Favoritos", x => x.PkFavorito);
+                    table.ForeignKey(
+                        name: "FK_Favoritos_Productos_FKProducto",
+                        column: x => x.FKProducto,
+                        principalTable: "Productos",
+                        principalColumn: "PkProducto",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Favoritos_Usuario_FKUsuario",
+                        column: x => x.FKUsuario,
+                        principalTable: "Usuario",
+                        principalColumn: "PkUsuario",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Ventas",
                 columns: table => new
                 {
@@ -134,6 +163,16 @@ namespace GoldenEleganceProyecto.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_Favoritos_FKProducto",
+                table: "Favoritos",
+                column: "FKProducto");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Favoritos_FKUsuario",
+                table: "Favoritos",
+                column: "FKUsuario");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Productos_FKCategoria",
                 table: "Productos",
                 column: "FKCategoria");
@@ -156,6 +195,9 @@ namespace GoldenEleganceProyecto.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Favoritos");
+
             migrationBuilder.DropTable(
                 name: "Ventas");
 

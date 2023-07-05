@@ -1,16 +1,16 @@
 import { TestBed } from '@angular/core/testing';
 
-import { UserStoreService } from './user-store.service';
+import { RolesService } from './roles.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 
-describe('UserStoreService', () => {
-  let service: UserStoreService;
+describe('RolesService', () => {
+  let service: RolesService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule]
     });
-    service = TestBed.inject(UserStoreService);
+    service = TestBed.inject(RolesService);
   });
 
   it('should be created', () => {

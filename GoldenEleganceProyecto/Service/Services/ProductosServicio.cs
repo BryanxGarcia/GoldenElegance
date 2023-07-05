@@ -25,11 +25,17 @@ namespace GoldenEleganceProyecto.Service.Services
             {
                 if (producto == null)
                     return new ResponseHelper { Success = false, Message = "Necesitas rellenar los campos solicitados" };
-
-                producto.RowVersion = DateTime.Now;
-                producto.IsDeleted = false;
+                Productos productoA = new Productos();            
+                productoA.NombreProducto = producto.NombreProducto;
+                productoA.Descripcion = producto.Descripcion;
+                productoA.Inventario = producto.Inventario;
+                productoA.PrecioVenta = producto.PrecioVenta;
+                productoA.FKCategoria = producto.FKCategoria;
+                productoA.Imagen = producto.Imagen;
+                productoA.RowVersion = DateTime.Now;
+                productoA.IsDeleted = false;
               
-                var resp = await _context.Productos.AddAsync(producto);
+                var resp = await _context.Productos.AddAsync(productoA);
                 var respu = await _context.SaveChangesAsync();
                 if (resp != null && respu > 0)
                 {
@@ -114,7 +120,7 @@ namespace GoldenEleganceProyecto.Service.Services
         {
             List<Productos> lista = new List<Productos>();
 
-            lista = await _context.Productos.ToListAsync();
+            lista = await _context.Productos.Include(u => u.Categoria).ToListAsync();
             return lista;
         }
 

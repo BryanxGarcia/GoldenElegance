@@ -11,7 +11,6 @@ import { PerfilUsuarioComponent } from './pages/perfil-usuario/perfil-usuario.co
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { NadvarUserComponent } from '../shared/components/nadvar-user/nadvar-user.component';
 import { CrearRolComponent } from './pages/roles/crear-rol/crear-rol.component';
-import { EliminarRolComponent } from './pages/roles/eliminar-rol/eliminar-rol.component';
 import { EditarRolComponent } from './pages/roles/editar-rol/editar-rol.component';
 import { ListarRolesComponent } from './pages/roles/listar-roles/listar-roles.component';
 import { CrearUsuarioComponent } from './pages/usuarios/crear-usuario/crear-usuario.component';
@@ -26,7 +25,12 @@ import { ListarCategoriaComponent } from './pages/categorias/listar-categoria/li
 import { DashboardNavigatorComponent } from '../shared/components/dashboard-navigator/dashboard-navigator.component';
 import { TableModule } from 'primeng/table';
 import { ToolbarModule } from 'primeng/toolbar';
+import { ButtonModule } from "primeng/button";
+import { InputTextModule } from 'primeng/inputtext';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { InputNumberModule } from 'primeng/inputnumber';
 import { ToastModule } from 'primeng/toast';
+import { MessagesModule } from 'primeng/messages';
 @NgModule({
   declarations: [
     CarritoCompraComponent,
@@ -37,7 +41,6 @@ import { ToastModule } from 'primeng/toast';
     PerfilUsuarioComponent,
     DashboardComponent,
     CrearRolComponent,
-    EliminarRolComponent,
     EditarRolComponent,
     ListarRolesComponent,
     CrearUsuarioComponent,
@@ -58,7 +61,12 @@ import { ToastModule } from 'primeng/toast';
     ReactiveFormsModule,
     TableModule,
     ToolbarModule,
-    ToastModule
+    ToastModule,
+    ButtonModule,
+    InputTextModule,
+    InputTextareaModule,
+    InputNumberModule,
+    MessagesModule
   ]
 })
 export class BaseAdminModule { }

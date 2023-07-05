@@ -1,30 +1,27 @@
-import { IResponse } from './../../models/IResponse.interface';
-import { IUsuario } from './../../models/IUsuario.interface';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { BehaviorSubject, Observable, catchError, of } from 'rxjs';
+import { Observable, catchError, of } from 'rxjs';
+import { ICategoria } from 'src/app/models/ICategoria.interface';
+import { IResponse } from 'src/app/models/IResponse.interface';
 import { environment } from 'src/environments/environment';
 import Swal from 'sweetalert2';
-
 
 @Injectable({
   providedIn: 'root'
 })
-export class UserStoreService {
+export class CategoriaService {
   private baseUrl: string = environment.serverUrl;
-  private controller = '/api/Usuarios';
-  private username$ = new BehaviorSubject<string>("");
-  private role$ = new BehaviorSubject<string>("");
-  constructor(private http: HttpClient, private router: Router) { }
-
-  listarUsuarios(): Observable<IUsuario[]> {
-    return this.http.get<IUsuario[]>(`${this.baseUrl}${this.controller}/usuarios`);
+  private controller = '/api/Categorias';
+  constructor(private http: HttpClient, private router:Router) { }
+  
+  listarCategorias(): Observable<ICategoria[]> {
+    return this.http.get<ICategoria[]>(`${this.baseUrl}${this.controller}/categorias`);
   }
 
-  registrarse(FormRegistro: FormGroup) {
-    return this.http.post<IResponse>(`${this.baseUrl}${this.controller}/crearUsuario`, FormRegistro).pipe(
+  registrarcategoria(FormCategoria: FormGroup){
+    return this.http.post<IResponse>(`${this.baseUrl}${this.controller}/crearCategoria`, FormCategoria).pipe(
       catchError((error: HttpErrorResponse) => {
         let response: IResponse = {
           success: false,
@@ -44,19 +41,19 @@ export class UserStoreService {
           Swal.fire({
             position: 'top-end',
             icon: 'success',
-            title: 'Usuario registrado correctamente',
+            title: 'Categoria registrado correctamente',
             text: response.message,
             showConfirmButton: false,
             timer: 1500,
           });
           setTimeout(() => {
-            this.router.navigate(['base/usuarios']);
+            this.router.navigate(['base/categorias']);
           }, 2000);
         } else {
           Swal.fire({
             position: 'top-end',
             icon: 'warning',
-            title: 'Usuario no registrado',
+            title: 'Categoria no registrada',
             text: response.message,
             showConfirmButton: false,
             timer: 3500,
@@ -65,7 +62,7 @@ export class UserStoreService {
       });
   }
 
-  eliminarUsuario(id: number) {
+  eliminarCategoria(id: number) {
     return this.http.delete<IResponse>(`${this.baseUrl}${this.controller}/eliminar/${id}`).pipe(
       catchError((error: HttpErrorResponse) => {
         let response: IResponse = {
@@ -86,19 +83,19 @@ export class UserStoreService {
           Swal.fire({
             position: 'top-end',
             icon: 'success',
-            title: 'Usuario eliminado correctamente',
+            title: 'Categoria eliminada correctamente',
             text: response.message,
             showConfirmButton: false,
             timer: 1500,
           });
           setTimeout(() => {
             location.reload(); // Recargar la página después de 2 minutos
-          }, 2000);
+          }, 5000);
         } else {
           Swal.fire({
             position: 'top-end',
             icon: 'warning',
-            title: 'Usuario no eliminado',
+            title: 'Categoria no eliminada',
             text: response.message,
             showConfirmButton: false,
             timer: 3500,
@@ -107,8 +104,8 @@ export class UserStoreService {
       });
   }
 
-  editarUsuario(FormEditar: IUsuario){
-    return this.http.post<IResponse>(`${this.baseUrl}${this.controller}/actualizarUsuario`, FormEditar).pipe(
+  editarCategoria(FormEditar: ICategoria){
+    return this.http.post<IResponse>(`${this.baseUrl}${this.controller}/actualizarCategoria`, FormEditar).pipe(
       catchError((error: HttpErrorResponse) => {
         let response: IResponse = {
           success: false,
@@ -128,19 +125,19 @@ export class UserStoreService {
           Swal.fire({
             position: 'top-end',
             icon: 'success',
-            title: 'Usuario editado correctamente',
+            title: 'Categoria editada correctamente',
             text: response.message,
             showConfirmButton: false,
             timer: 1500,
           });
           setTimeout(() => {
-            this.router.navigate(['base/usuarios']);
+            this.router.navigate(['base/categorias']);
           }, 2000);
         } else {
           Swal.fire({
             position: 'top-end',
             icon: 'warning',
-            title: 'Usuario no se pudo editar',
+            title: 'Categoria no actualizada',
             text: response.message,
             showConfirmButton: false,
             timer: 3500,
@@ -150,23 +147,6 @@ export class UserStoreService {
   }
 
   buscarPorId(id: number){
-    return this.http.get<IUsuario>(`${this.baseUrl}${this.controller}/usuario/${id}`);
+    return this.http.get<ICategoria>(`${this.baseUrl}${this.controller}/categoria/${id}`);
   }
-
-  public getRoleFromStore() {
-    return this.role$.asObservable();
-  }
-
-  public setRoleFromStore(role: string) {
-    this.role$.next(role);
-  }
-
-  public getUsernameFromStore() {
-    return this.username$.asObservable();
-  }
-
-  public setUsernameFromStore(username: string) {
-    this.username$.next(username);
-  }
-
 }

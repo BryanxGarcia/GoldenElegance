@@ -1,8 +1,8 @@
 export interface IProductos{
-    id:number,
+    pkCategoria:number,
     nombreProducto: string,
     descripcion: string,
-    categoria: string,
+    fkCategoria: number,
     precioVenta: number,
     inventario: number,
     imagen: string
