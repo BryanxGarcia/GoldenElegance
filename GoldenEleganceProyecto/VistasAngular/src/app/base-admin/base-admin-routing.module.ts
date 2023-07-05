@@ -10,6 +10,7 @@ import { ListarUsuarioComponent } from './pages/usuarios/listar-usuario/listar-u
 import { ListarCategoriaComponent } from './pages/categorias/listar-categoria/listar-categoria.component';
 import { ListarRolesComponent } from './pages/roles/listar-roles/listar-roles.component';
 import { NotFoundComponent } from '../shared/components/not-found/not-found.component';
+import { FichaProductoComponent } from './pages/ficha-producto/ficha-producto.component';
 
 
 const routes: Routes = [
@@ -62,6 +63,12 @@ const routes: Routes = [
       title: 'Productos',
     }
   },  {
+    path: 'ficha',
+    component: FichaProductoComponent,
+    data: {
+      title: 'Ficha de producto',
+    }
+  },{
     path: 'usuarios',
     component: ListarUsuarioComponent,
     data: {
