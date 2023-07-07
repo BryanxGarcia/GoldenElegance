@@ -11,8 +11,7 @@ describe('ContactanosComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [ContactanosComponent, HeaderComponent],
-      imports: [HttpClientTestingModule,  ReactiveFormsModule, FormsModule]
-
+      imports: [HttpClientTestingModule, ReactiveFormsModule, FormsModule],
     });
     fixture = TestBed.createComponent(ContactanosComponent);
     component = fixture.componentInstance;
@@ -21,5 +20,24 @@ describe('ContactanosComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  //Comprueba que enviar un formulario no válido, no enviara un mensaje
+  it('test_formulario_invalido_no_envia_mesnaje', () => {
+    const spy = spyOn(component.mensajeriaS, 'enviarContacto');
+    component.onSubmit();
+    expect(spy).not.toHaveBeenCalled();
+  });
+
+  // Comprueba que el formulario sea valido para poder hacer submit
+  it('test_valid_form_submission', () => {
+    // Arrange
+    component.contactoForm.controls['Nombre'].setValue('John Doe');
+    component.contactoForm.controls['Correo'].setValue('johndoe@example.com');
+    component.contactoForm.controls['Numero'].setValue('1234567890');
+    component.contactoForm.controls['Mensaje'].setValue('Hello, World!');
+
+    component.onSubmit();
+    expect(component.contactoForm.valid).toBeTrue();
   });
 });

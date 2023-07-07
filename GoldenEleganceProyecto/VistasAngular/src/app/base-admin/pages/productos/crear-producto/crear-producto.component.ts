@@ -12,8 +12,8 @@ import { ICategoria } from 'src/app/models/ICategoria.interface';
 export class CrearProductoComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
-    private productoService: ProductsService,
-    private catServicio: CategoriaService
+    public productoService: ProductsService,
+    public catServicio: CategoriaService
   ) { }
   ngOnInit(): void {
     this.obtenerCategorias()

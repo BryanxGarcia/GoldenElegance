@@ -35,13 +35,13 @@ export class FormResetPasswordComponent implements OnInit {
 
   onSubmit() {
     if (this.resetPasswordForm.valid) {
+      if(this.emailToReset && this.emailtoken){
       this.resetPasswordObj.email = this.emailToReset;
       this.resetPasswordObj.newPassword=this.resetPasswordForm.value.password;
       this.resetPasswordObj.confirmPassword = this.resetPasswordForm.value.confirmPassword;
       this.resetPasswordObj.emailToken=this.emailtoken;
-
       this.authS.resetPassword(this.resetPasswordObj)
-     
+      }
     }
   }
 }

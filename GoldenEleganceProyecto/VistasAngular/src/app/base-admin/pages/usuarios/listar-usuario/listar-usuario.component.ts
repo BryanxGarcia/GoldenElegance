@@ -7,12 +7,12 @@ import { Router } from '@angular/router';
   selector: 'app-listar-usuario',
   templateUrl: './listar-usuario.component.html',
   styleUrls: ['./listar-usuario.component.css']
-  
-})
-export class ListarUsuarioComponent  implements OnInit {
-  usuarios: IUsuario[]=[];
 
-  constructor(private userServicio: UserStoreService, private router: Router) {}
+})
+export class ListarUsuarioComponent implements OnInit {
+  usuarios: IUsuario[] = [];
+
+  constructor(public userServicio: UserStoreService, private router: Router) { }
 
   ngOnInit() {
     this.obtenerProductos();
@@ -22,7 +22,6 @@ export class ListarUsuarioComponent  implements OnInit {
     this.userServicio.listarUsuarios().subscribe(
       (response) => {
         this.usuarios = response;
-        console.log(this.usuarios)
       },
       (error) => {
         console.error('Error al obtener productos:', error);
@@ -31,11 +30,10 @@ export class ListarUsuarioComponent  implements OnInit {
   }
 
   eliminar(id: number) {
-    console.log(id);
     this.userServicio.eliminarUsuario(id);
-}
-irAUsuario(id: number) {
-  this.router.navigate(['/base/usuario/editar/', id]);
-}
+  }
+  irAUsuario(id: number) {
+    this.router.navigate(['/base/usuario/editar/', id]);
+  }
 
 }

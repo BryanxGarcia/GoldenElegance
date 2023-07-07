@@ -16,7 +16,7 @@ import Swal from 'sweetalert2';
 
 export class ContactanosComponent {
 
-  constructor(private formB: FormBuilder, private mensajeriaS: MensajeriaService, private route:Router) { }
+  constructor(private formB: FormBuilder, public mensajeriaS: MensajeriaService, private route:Router) { }
 
   contactoForm:FormGroup = this.formB.group({
    Nombre:["", Validators.required],

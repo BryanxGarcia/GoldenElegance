@@ -10,27 +10,27 @@ import { RolesService } from 'src/app/services/roles/roles.service';
   styleUrls: ['./editar-rol.component.css']
 })
 export class EditarRolComponent implements OnInit {
-  id= 0;
-  Roles: IRoles={
+  id = 0;
+  Roles: IRoles = {
     pkRol: 0,
     nombre: '',
     descripcion: ''
   }
-  constructor(private route: ActivatedRoute, private rolesService:RolesService, private fb: FormBuilder) { }
+  constructor(private route: ActivatedRoute, public rolesService: RolesService, private fb: FormBuilder) { }
   editarRol: FormGroup = this.fb.group({
     Nombre: ['', Validators.required],
     Descripcion: ['', Validators.required],
-    
+
   });
   ngOnInit() {
     this.route.params.subscribe(params => {
       this.id = params['id'];
     });
     this.obtenerRol();
-    
+
   }
 
-  obtenerRol(){
+  obtenerRol() {
     this.rolesService.buscarPorId(this.id).subscribe(
       (response) => {
         this.Roles = response;
@@ -42,11 +42,14 @@ export class EditarRolComponent implements OnInit {
       }
     );
   }
-  guardarRol(){
-    this.Roles.nombre= this.editarRol.controls['Nombre'].value;
-    this.Roles.descripcion= this.editarRol.controls['Descripcion'].value;
-
-    this.rolesService.editarRol(this.Roles);
+  guardarRol() {
+    if (this.editarRol.valid) {
+      this.editarRol.patchValue({
+        Nombre: this.Roles.nombre,
+        Descripcion: this.Roles.descripcion
+      });
+      this.rolesService.editarRol(this.Roles);
+    }
   }
 
 }

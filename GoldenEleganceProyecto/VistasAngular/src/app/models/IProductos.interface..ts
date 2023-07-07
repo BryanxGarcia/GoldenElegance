@@ -1,5 +1,5 @@
 export interface IProductos{
-    pkCategoria:number,
+    pkProducto:number,
     nombreProducto: string,
     descripcion: string,
     fkCategoria: number,

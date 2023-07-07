@@ -10,7 +10,7 @@ import { AuthService } from 'src/app/services/auth.service';
 export class LoginComponent {
   constructor(
     private fb: FormBuilder,
-    private auth: AuthService,
+    public auth: AuthService,
   ) { }
   role = "";
   claseDiv = 'container';

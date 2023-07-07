@@ -11,7 +11,7 @@ import { ProductsService } from 'src/app/services/productsService/products.servi
 export class ListarProductosComponent implements OnInit {
   Prductos: IProductos[] = [];
 
-  constructor(private prodService: ProductsService, private router: Router) { }
+  constructor(public prodService: ProductsService, private router: Router) { }
 
   ngOnInit() {
     this.obtenerProductos();
@@ -21,7 +21,6 @@ export class ListarProductosComponent implements OnInit {
     this.prodService.listarProducto().subscribe(
       (response) => {
         this.Prductos = response;
-        console.log(this.Prductos);
       },
       (error) => {
         console.error('Error al obtener productos:', error);

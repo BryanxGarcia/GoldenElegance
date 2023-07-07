@@ -11,8 +11,7 @@ describe('LoginComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [LoginComponent, HeaderComponent],
-      imports: [HttpClientTestingModule,  ReactiveFormsModule, FormsModule]
-
+      imports: [HttpClientTestingModule, ReactiveFormsModule, FormsModule]
     });
     fixture = TestBed.createComponent(LoginComponent);
     component = fixture.componentInstance;
@@ -21,5 +20,26 @@ describe('LoginComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+  // Tests that iniciarSesion method of AuthService is called when loginForm is valid
+  it('test_valid_login', () => {
+    const authSpy = spyOn(component.auth, 'iniciarSesion');
+    component.loginForm.setValue({ Correo: 'test@test.com', Password: '123456' });
+    component.onLogin();
+    expect(authSpy).toHaveBeenCalled();
+  });
+  // Tests that iniciarSesion method of AuthService is not called when loginForm is invalid
+  it('test_invalid_login', () => {
+    const authSpy = spyOn(component.auth, 'iniciarSesion');
+    component.loginForm.setValue({ Correo: '', Password: '' });
+    component.onLogin();
+    expect(authSpy).not.toHaveBeenCalled();
+  });
+  // Tests that iniciarSesion method of AuthService is not called when loginForm is empty
+  it('test_empty_login', () => {
+    const authSpy = spyOn(component.auth, 'iniciarSesion');
+    component.loginForm.reset();
+    component.onLogin();
+    expect(authSpy).not.toHaveBeenCalled();
   });
 });

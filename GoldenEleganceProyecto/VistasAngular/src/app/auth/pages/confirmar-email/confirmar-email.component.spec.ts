@@ -22,4 +22,17 @@ describe('ConfirmarEmailComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+    // Tests that confirmarCuenta method calls the confirmarCuenta method of the AuthService service with the confirmarObj object as parameter
+    it('test_happy_path_confirmar_cuenta', () => {
+      spyOn(component.authS, 'confirmarCuenta');
+      component.confirmarCuenta();
+      expect(component.authS.confirmarCuenta).toHaveBeenCalledWith(component.confirmarObj);
+  });
+      // Tests that confirmarCuenta method does not call the confirmarCuenta method of the AuthService service when email property of confirmarObj is undefined
+      it('test_edge_case_confirmar_cuenta_email_undefined', () => {
+        spyOn(component.authS, 'confirmarCuenta');
+        component.confirmarObj = null!;
+        component.confirmarCuenta();
+        expect(component.authS.confirmarCuenta).not.toHaveBeenCalled();
+    });
 });

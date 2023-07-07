@@ -12,10 +12,10 @@ import { ProductsService } from 'src/app/services/productsService/products.servi
   styleUrls: ['./editar-producto.component.css']
 })
 export class EditarProductoComponent implements OnInit {
-  id= 0;
+  id = 0;
   Categorias: ICategoria[] = [];
   Producto: IProductos = {
-    pkCategoria: 0,
+    pkProducto: 0,
     nombreProducto: '',
     descripcion: '',
     fkCategoria: 0,
@@ -23,13 +23,13 @@ export class EditarProductoComponent implements OnInit {
     inventario: 0,
     imagen: ''
   };
-  opcionSeleccionada=0;
+  opcionSeleccionada = 0;
 
   constructor(
-    private route: ActivatedRoute, 
-    private productosService:ProductsService, 
+    private route: ActivatedRoute,
+    public productosService: ProductsService,
     private fb: FormBuilder,
-    private catServicio:CategoriaService) { }
+    private catServicio: CategoriaService) { }
   editarProductoForm: FormGroup = this.fb.group({
     NombreProducto: ['', Validators.required],
     Descripcion: ['', Validators.required],
@@ -41,11 +41,10 @@ export class EditarProductoComponent implements OnInit {
   ngOnInit() {
     this.route.params.subscribe(params => {
       this.id = params['id'];
-      console.log(this.id)
     });
     this.obtenerProducto();
     this.obtenerCategorias();
-    
+
   }
 
   obtenerCategorias() {
@@ -59,32 +58,32 @@ export class EditarProductoComponent implements OnInit {
       }
     );
   }
-  obtenerProducto(){
+  obtenerProducto() {
     this.productosService.buscarPorId(this.id).subscribe(
       (response) => {
         this.Producto = response;
-        this.editarProductoForm.controls['NombreProducto'].setValue(this.Producto.nombreProducto);
-        this.editarProductoForm.controls['Descripcion'].setValue(this.Producto.descripcion);
-        this.editarProductoForm.controls['FkCategoria'].setValue(this.Producto.fkCategoria);
-        this.editarProductoForm.controls['precioVenta'].setValue(this.Producto.precioVenta);
-        this.editarProductoForm.controls['Inventario'].setValue(this.Producto.inventario);
-        this.editarProductoForm.controls['Imagen'].setValue(this.Producto.imagen);
-        this.opcionSeleccionada = this.Producto.fkCategoria;
-      },
+        this.editarProductoForm.patchValue({
+          NombreProducto: this.Producto.nombreProducto,
+          Descripcion: this.Producto.descripcion,
+          FkCategoria: this.Producto.fkCategoria,
+          precioVenta: this.Producto.precioVenta,
+          Inventario: this.Producto.inventario,
+          Imagen: this.Producto.imagen
+        });
+       },
       (error) => {
         console.error('Error al obtener productos:', error);
       }
     );
   }
 
-  editarProducto(){
-    console.log(this.Producto)
-    this.Producto.nombreProducto= this.editarProductoForm.controls['NombreProducto'].value;
-    this.Producto.descripcion= this.editarProductoForm.controls['Descripcion'].value;
-    this.Producto.fkCategoria= this.editarProductoForm.controls['FkCategoria'].value;
-    this.Producto.precioVenta= this.editarProductoForm.controls['precioVenta'].value;
-    this.Producto.inventario= this.editarProductoForm.controls['Inventario'].value;
-    this.Producto.imagen= this.editarProductoForm.controls['Imagen'].value;
+  editarProducto() {
+    this.Producto.nombreProducto = this.editarProductoForm.controls['NombreProducto'].value;
+    this.Producto.descripcion = this.editarProductoForm.controls['Descripcion'].value;
+    this.Producto.fkCategoria = this.editarProductoForm.controls['FkCategoria'].value;
+    this.Producto.precioVenta = this.editarProductoForm.controls['precioVenta'].value;
+    this.Producto.inventario = this.editarProductoForm.controls['Inventario'].value;
+    this.Producto.imagen = this.editarProductoForm.controls['Imagen'].value;
 
     this.productosService.editarProducto(this.Producto);
   }

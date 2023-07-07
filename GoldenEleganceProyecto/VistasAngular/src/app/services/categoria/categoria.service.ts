@@ -12,9 +12,9 @@ import Swal from 'sweetalert2';
   providedIn: 'root'
 })
 export class CategoriaService {
-  private baseUrl: string = environment.serverUrl;
-  private controller = '/api/Categorias';
-  constructor(private http: HttpClient, private router:Router) { }
+  public baseUrl: string = environment.serverUrl;
+  public controller = '/api/Categorias';
+  constructor(private http: HttpClient, public router:Router) { }
   
   listarCategorias(): Observable<ICategoria[]> {
     return this.http.get<ICategoria[]>(`${this.baseUrl}${this.controller}/categorias`);
