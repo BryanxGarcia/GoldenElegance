@@ -11,13 +11,13 @@ import { RolesService } from 'src/app/services/roles/roles.service';
 export class ListarRolesComponent  implements OnInit {
   Roles: IRoles[]=[];
 
-  constructor(private rolServicio: RolesService, private router: Router) {}
+  constructor(public rolServicio: RolesService, private router: Router) {}
 
   ngOnInit() {
-    this.obtenerProductos();
+    this.obtenerRoles();
   }
 
-  obtenerProductos() {
+  obtenerRoles() {
     this.rolServicio.listarRol().subscribe(
       (response) => {
         this.Roles = response;
@@ -29,8 +29,9 @@ export class ListarRolesComponent  implements OnInit {
   }
 
   eliminar(id: number) {
-    console.log(id);
+    if(id){
     this.rolServicio.eliminarRol(id);
+    }
 }
 irAUsuario(id: number) {
   this.router.navigate(['/base/roles/editar/', id]);

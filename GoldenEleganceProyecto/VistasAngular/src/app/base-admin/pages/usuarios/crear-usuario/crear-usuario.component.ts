@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserStoreService } from 'src/app/services/Usuarios/user-store.service';
-import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-crear-usuario',
@@ -11,8 +10,7 @@ import { AuthService } from 'src/app/services/auth.service';
 export class CrearUsuarioComponent {
   constructor(
     private fb: FormBuilder,
-    private userService: UserStoreService,
-    private auth: AuthService,
+    public userService: UserStoreService,
   ) { }
   sigUpForm: FormGroup = this.fb.group({
     Nombre: ['', Validators.required],

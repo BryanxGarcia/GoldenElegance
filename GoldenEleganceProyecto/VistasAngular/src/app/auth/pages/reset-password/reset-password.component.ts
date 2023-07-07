@@ -9,15 +9,17 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class ResetPasswordComponent {
 
-  constructor(private formB: FormBuilder, private authS:AuthService ) { }
+  constructor(private formB: FormBuilder, public authS:AuthService ) { }
 
   emailPassword:FormGroup = this.formB.group({
     Correo:["", Validators.required],
    });
  
  
-  onSubmit(){
-  this.authS.sendResetPassword(this.emailPassword.controls['Correo'].value)
+   onSubmit(){
+    if(this.emailPassword.valid){
+      this.authS.sendResetPassword(this.emailPassword.controls['Correo'].value)
+    }
   }
 }
 

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { ConfirmarEmail } from 'src/app/models/confirmarEmail.model';
 import { AuthService } from 'src/app/services/auth.service';
 
@@ -8,12 +8,12 @@ import { AuthService } from 'src/app/services/auth.service';
   templateUrl: './confirmar-email.component.html',
   styleUrls: ['./confirmar-email.component.css']
 })
-export class ConfirmarEmailComponent implements OnInit{
-  constructor(private route: Router, private activaterouter: ActivatedRoute, private authS: AuthService) { }
+export class ConfirmarEmailComponent implements OnInit {
+  constructor(public activaterouter: ActivatedRoute, public authS: AuthService) { }
 
   emailToReset!: string;
   emailtoken!: string;
-  confirmarObj =  new ConfirmarEmail();
+  confirmarObj = new ConfirmarEmail();
 
   ngOnInit(): void {
     this.activaterouter.queryParams.subscribe(val => {
@@ -21,14 +21,15 @@ export class ConfirmarEmailComponent implements OnInit{
       const uriToken = val['code'];
       this.emailtoken = uriToken.replace(/ /g, '+');
     });
-
     this.confirmarObj.email = this.emailToReset;
     this.confirmarObj.emailToken = this.emailtoken;
     this.confirmarCuenta();
   }
 
   confirmarCuenta() {
-    this.authS.confirmarCuenta(this.confirmarObj)
+    if (this.confirmarObj) {
+      this.authS.confirmarCuenta(this.confirmarObj)
+    }
   }
 }
 

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { IUsuario } from 'src/app/models/IUsuario.interface';
 import { UserStoreService } from 'src/app/services/Usuarios/user-store.service';
 
@@ -24,7 +24,7 @@ export class EditarUsuarioComponent implements OnInit {
     direccion: '',
     fkRol: 0,
   };
-  constructor(private route: ActivatedRoute, private user:UserStoreService, private fb: FormBuilder) { }
+  constructor(public router: Router,public route: ActivatedRoute, public user:UserStoreService, private fb: FormBuilder) { }
   editForm: FormGroup = this.fb.group({
     Nombre: ['', Validators.required],
     Username: ['', Validators.required],
@@ -37,31 +37,36 @@ export class EditarUsuarioComponent implements OnInit {
   });
   ngOnInit() {
     this.route.params.subscribe(params => {
-      this.id = params['id'];
-      console.log(this.id)
+      this.id = parseInt(params['id']);
     });
+    if(!this.id){
+      this.router.navigate(['base/NotFound']);
+    }
     this.obtenerUsuario();
-    
   }
 
   obtenerUsuario(){
     this.user.buscarPorId(this.id).subscribe(
       (response) => {
         this.Usuario = response;
-        this.editForm.controls['Nombre'].setValue(this.Usuario.nombre);
-        this.editForm.controls['Username'].setValue(this.Usuario.username);
-        this.editForm.controls['Correo'].setValue(this.Usuario.correo);
-        this.editForm.controls['Apellido'].setValue(this.Usuario.apellido);
-        this.editForm.controls['Telefono'].setValue(this.Usuario.telefono);
-        this.editForm.controls['Direccion'].setValue(this.Usuario.direccion);
-        this.editForm.controls['FKRol'].setValue(this.Usuario.fkRol);
+        this.editForm.patchValue({
+          Nombre: this.Usuario.nombre,
+          Username: this.Usuario.username,
+          Correo: this.Usuario.correo,
+          Apellido: this.Usuario.apellido,
+          Telefono: this.Usuario.telefono,
+          Direccion: this.Usuario.direccion,
+          FKRol: this.Usuario.fkRol
+        });
+      
       },
       (error) => {
         console.error('Error al obtener productos:', error);
       }
     );
   }
-  guardarUsuario(){
+   guardarUsuario(){
+    if (this.editForm.valid) {
     this.Usuario.nombre= this.editForm.controls['Nombre'].value;
     this.Usuario.username= this.editForm.controls['Username'].value;
     this.Usuario.correo= this.editForm.controls['Correo'].value;
@@ -72,6 +77,7 @@ export class EditarUsuarioComponent implements OnInit {
 
     console.log(this.Usuario)
     this.user.editarUsuario(this.Usuario);
+  }
   }
 
 }

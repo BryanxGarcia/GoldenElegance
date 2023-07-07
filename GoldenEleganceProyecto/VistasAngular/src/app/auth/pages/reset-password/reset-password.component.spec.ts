@@ -23,4 +23,20 @@ describe('ResetPasswordComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+  // Tests that sendResetPassword method is called with valid email value
+  it('test_valid_email', () => {
+    spyOn(component.authS, 'sendResetPassword');
+    component.emailPassword.controls['Correo'].setValue('valid_email@test.com');
+    component.onSubmit();
+    expect(component.authS.sendResetPassword).toHaveBeenCalledWith('valid_email@test.com');
+  });
+  // Tests that sendResetPassword method is not called if email field is empty
+  it('test_empty_email', () => {
+    spyOn(component.authS, 'sendResetPassword');
+    component.emailPassword.controls['Correo'].setValue('');
+    component.onSubmit();
+    expect(component.authS.sendResetPassword).not.toHaveBeenCalled();
+  });
+  // Tests that sendResetPassword method is not called if email format is invalid
+
 });

@@ -10,7 +10,7 @@ import { RolesService } from 'src/app/services/roles/roles.service';
 export class CrearRolComponent {
   constructor(
     private fb: FormBuilder,
-    private rolService: RolesService,
+    public rolService: RolesService,
   ) { }
   crearRol: FormGroup = this.fb.group({
     Nombre: ['', Validators.required],
