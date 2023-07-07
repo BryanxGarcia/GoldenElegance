@@ -1,12 +1,9 @@
-import { IResponse } from './../../models/IResponse.interface';
 import { TestBed } from '@angular/core/testing';
-
 import { CategoriaService } from './categoria.service';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ICategoria } from 'src/app/models/ICategoria.interface';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { of, throwError } from 'rxjs';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import {  throwError } from 'rxjs';
 
 describe('CategoriaService', () => {
   let service: CategoriaService;
@@ -60,7 +57,6 @@ describe('CategoriaService', () => {
       { pkCategoria: 2, nombreCat: 'Category 2', descripcion: 'Description 2' },
       { pkCategoria: 3, nombreCat: 'Category 3', descripcion: 'Description 3' }
     ];
-    let actualCategories: ICategoria[] = [];
     service.listarCategorias().subscribe((categories) => {
       expect(categories.length).toBe(expectedCategories.length);
     });

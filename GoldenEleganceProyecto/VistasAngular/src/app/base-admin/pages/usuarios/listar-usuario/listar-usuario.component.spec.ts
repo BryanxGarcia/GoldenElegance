@@ -1,10 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { ListarUsuarioComponent } from './listar-usuario.component';
 import { DashboardNavigatorComponent } from 'src/app/shared/components/dashboard-navigator/dashboard-navigator.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { of, throwError } from 'rxjs';
+import { throwError } from 'rxjs';
 
 describe('ListarUsuarioComponent', () => {
   let component: ListarUsuarioComponent;
