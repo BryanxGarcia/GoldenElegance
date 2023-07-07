@@ -10,6 +10,7 @@ import { ListarUsuarioComponent } from './pages/usuarios/listar-usuario/listar-u
 import { ListarCategoriaComponent } from './pages/categorias/listar-categoria/listar-categoria.component';
 import { ListarRolesComponent } from './pages/roles/listar-roles/listar-roles.component';
 import { NotFoundComponent } from '../shared/components/not-found/not-found.component';
+import { FichaProductoComponent } from './pages/ficha-producto/ficha-producto.component';
 import { CrearUsuarioComponent } from './pages/usuarios/crear-usuario/crear-usuario.component';
 import { EditarUsuarioComponent } from './pages/usuarios/editar-usuario/editar-usuario.component';
 import { CrearRolComponent } from './pages/roles/crear-rol/crear-rol.component';
@@ -19,8 +20,6 @@ import { CrearCategoriaComponent } from './pages/categorias/crear-categoria/crea
 import { EditarCategoriaComponent } from './pages/categorias/editar-categoria/editar-categoria.component';
 import { CrearProductoComponent } from './pages/productos/crear-producto/crear-producto.component';
 import { EditarProductoComponent } from './pages/productos/editar-producto/editar-producto.component';
-
-
 
 const routes: Routes = [
   {
@@ -90,6 +89,12 @@ const routes: Routes = [
       title: 'Editar producto',
     }
   },  {
+    path: 'ficha',
+    component: FichaProductoComponent,
+    data: {
+      title: 'Ficha de producto',
+    }
+  },{
     path: 'usuarios',
     component: ListarUsuarioComponent,
     data: {
