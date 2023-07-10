@@ -31,6 +31,7 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { ToastModule } from 'primeng/toast';
 import { MessagesModule } from 'primeng/messages';
+import { SliderModule } from 'primeng/slider';
 @NgModule({
   declarations: [
     CarritoCompraComponent,
@@ -66,7 +67,8 @@ import { MessagesModule } from 'primeng/messages';
     InputTextModule,
     InputTextareaModule,
     InputNumberModule,
-    MessagesModule
+    MessagesModule,
+    SliderModule
   ]
 })
 export class BaseAdminModule { }
