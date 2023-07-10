@@ -1,15 +1,51 @@
-
 <app-nadvar-user></app-nadvar-user>
-<div class="container-cards">
-    <div  *ngFor="let item of productos" >
-        <div class="cards">
-            <figure>
-                <img src="../../../../assets/img/imag.png" alt="hi">
-            </figure>
-            <div class="contenido-cards">
-                <h3>{{item.nombreProducto }}</h3>
-                <p>${{item.precioVenta}}</p>
+
+<div class="inicio">
+    <div class="row">
+        <div class="col-3">
+            <div class="filters">
+                <h3>Filtros</h3>
+                <div class="form-group">
+                    <label for="search">Búsqueda</label>
+                    <input type="text" class="form-control" id="search" name="search" placeholder="Buscar..."
+                        (input)="buscarNombre($event)">
+                </div>
+                <div class="form-group">
+                    <label for="price-min">Precio mínimo</label>
+                    <span class="range-value">{{ priceMin }}</span>
+                    <input type="range" class="form-control-range" id="price-min" name="price-min" min="0" max="1000"
+                        (input)="updatePriceMin($event)">
+                </div>
+                <div class="form-group">
+                    <label for="price-max">Precio máximo</label>
+                    <span class="range-value">{{ priceMax }}</span>
+                    <input type="range" class="form-control-range" id="price-max" name="price-max" min="0" max="1000"
+                        (input)="updatePriceMax($event)">
+                </div>
+                <div class="form-group">
+                    <label for="category">Categoría</label>
+                    <select class="form-control" (change)="onCategoriaSelected($event)">
+                        <option value="Not">Ninguno</option>
+                        <option *ngFor="let categoria of Categorias" [value]="categoria.pkCategoria">
+                          {{ categoria.nombreCat }}
+                        </option>
+                      </select>
+                </div>
+            </div>
+        </div>
+        <div class="col-9">
+            <div class="container">
+                <div class="row">
+                    <div class="mostrador" *ngFor="let product of filteredProducts">
+                        <div class="item">
+                            <div class="contenedor-foto">
+                                <img src="../../../../assets/img/imag.png" alt="">
+                            </div>
+                            <p class="descripcion">{{ product.nombreProducto }}</p>
+                            <span class="precio">${{ product.precioVenta }}</span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-</div>
