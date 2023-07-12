@@ -39,7 +39,7 @@ export class EditarProductoComponent implements OnInit {
     Imagen: ['', Validators.required],
   });
   ngOnInit() {
-    this.route.params.subscribe(params => {
+    this.route.params.subscribe(params => { 
       this.id = params['id'];
     });
     this.obtenerProducto();

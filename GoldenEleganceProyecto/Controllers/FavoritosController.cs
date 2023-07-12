@@ -17,25 +17,43 @@ namespace GoldenEleganceProyecto.Controllers
         }
 
         /// <summary>
-        /// Metodo que nos sirve para obtener una lista de los roles registradas en la base de datos.
+        /// Metodo que nos sirve para obtener una lista de los favoritos por usuario registradas en la base de datos.
         /// </summary>
         /// <returns>Lista de Favoritos</returns>
         [HttpGet]
-        [Route("favoritos/{Id}")]
-        public async Task<IActionResult> ObtenerPorId(int? Id)
+        [Route("favoritos/{Username}")]
+        public async Task<IActionResult> ObtenerListaPorUsuario(FavoritosDTO favoritoDTO)
         {
             ResponseHelper response = new ResponseHelper();
 
-            if (Id == null || Id == 0)
+            if (favoritoDTO.Usuario == null)
             {
                 response.Success = false;
                 response.Message = "No hay Usuario con ese Id";
                 return BadRequest(response);
             }
-            var modelo = await _FavoritosServicio.ObtenerLista(Id);
+            var modelo = await _FavoritosServicio.ObtenerLista(favoritoDTO.Usuario);
             return Ok(modelo);
         }
+        /// <summary>
+        /// Metodo que nos sirve para obtener una lista de los roles registradas en la base de datos.
+        /// </summary>
+        /// <returns>Lista de Favoritos</returns>
+        [HttpPost]
+        [Route("existeFavorito")]
+        public async Task<IActionResult> ExisteEnFavoritos(FavoritosDTO favoritoDTO)
+        {
+            ResponseHelper response = new ResponseHelper();
 
+            if (favoritoDTO == null)
+            {
+                response.Success = false;
+                response.Message = "No se proporciono niguna busqueda";
+                return BadRequest(response);
+            }
+            var modelo = await _FavoritosServicio.ExisteEnFavoritos(favoritoDTO);
+            return Ok(modelo);
+        }
         /// <summary>
         /// Metodo que nos sirve para crear un nuevo rol
         /// </summary>
@@ -43,9 +61,9 @@ namespace GoldenEleganceProyecto.Controllers
         /// <returns>ResponseHelper</returns>
         [HttpPost]
         [Route("agregar")]
-        public async Task<IActionResult> AgregarFavorito(Favoritos vmFavorito)
+        public async Task<IActionResult> AgregarFavorito(FavoritosDTO favoritoDTO)
         {
-            ResponseHelper response = await _FavoritosServicio.AgregarFavorito(vmFavorito);
+            ResponseHelper response = await _FavoritosServicio.AgregarFavorito(favoritoDTO);
             if (!response.Success)
             {
                 return BadRequest(response);
@@ -54,18 +72,18 @@ namespace GoldenEleganceProyecto.Controllers
         }
 
         [HttpDelete]
-        [Route("eliminar/{id}")]
-        public async Task<IActionResult> Eliminar(int? id)
+        [Route("eliminar")]
+        public async Task<IActionResult> Eliminar([FromBody] FavoritosDTO favoritoDTO)
         {
             ResponseHelper response = new ResponseHelper();
-            if (id == null || id == 0)
+            if (favoritoDTO == null)
             {
                 response.Success = false;
                 response.Message = "No se encontro el Id correspondiente";
                 return BadRequest(response);
             }
 
-            response = await _FavoritosServicio.EliminarFavorito(id);
+            response = await _FavoritosServicio.EliminarFavorito(favoritoDTO);
             if (!response.Success)
             {
                 return BadRequest(response);

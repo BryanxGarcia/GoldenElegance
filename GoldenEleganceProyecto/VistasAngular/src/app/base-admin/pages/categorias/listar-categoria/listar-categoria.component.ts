@@ -29,7 +29,6 @@ export class ListarCategoriaComponent implements OnInit {
   }
 
   eliminar(id: number) {
-    console.log(id);
     this.catServicio.eliminarCategoria(id);
 }
 irACategoria(id: number) {

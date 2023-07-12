@@ -1,1 +1,39 @@
-<p>favoritos works!</p>
+<app-nadvar-user></app-nadvar-user>
+
+
+<div class="inicio">
+    <div class="row">
+        <div class="col-3">
+            <app-siderbar-user></app-siderbar-user>
+        </div>
+
+        <div class="col-9">
+            <div class="container">
+                <h2 style="margin-left: 2%;">Mis productos favoritos</h2>
+                <hr style="width: 96%;">
+                <div class="row">
+                    <div class="mostrador" *ngFor="let product of Productos">
+                        <div class="item">
+                            <div class="contenedor-foto">
+                                <img src="{{product.imagen}}" alt="">
+                            </div>
+                            <p class="descripcion">{{ product.nombreProducto }}</p>
+                            <p class="precio">${{ product.precioVenta }}</p>
+
+                            <p-button icon="pi pi-cart-plus" label="Agregar al carrito"
+                                styleClass="p-button-outlined p-button-warning"
+                                (click)="addCarrito(product.pkProducto)"> </p-button>
+                            <div>
+
+                                <br>
+                            </div>
+                            <p-button icon="pi pi-info-circle" label="Ver detalles"
+                                styleClass="p-button-outlined p-button-help" (click)="verProducto(product.pkProducto)">
+                            </p-button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

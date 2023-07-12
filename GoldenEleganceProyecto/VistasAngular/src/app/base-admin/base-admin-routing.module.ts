@@ -89,7 +89,7 @@ const routes: Routes = [
       title: 'Editar producto',
     }
   },  {
-    path: 'ficha',
+    path: 'ficha/:id',
     component: FichaProductoComponent,
     data: {
       title: 'Ficha de producto',

@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace GoldenEleganceProyecto.Migrations
 {
-    public partial class first : Migration
+    public partial class VFinal : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

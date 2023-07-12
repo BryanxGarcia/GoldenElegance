@@ -27,9 +27,9 @@
                     <select class="form-control" (change)="onCategoriaSelected($event)">
                         <option value="Not">Ninguno</option>
                         <option *ngFor="let categoria of Categorias" [value]="categoria.pkCategoria">
-                          {{ categoria.nombreCat }}
+                            {{ categoria.nombreCat }}
                         </option>
-                      </select>
+                    </select>
                 </div>
             </div>
         </div>
@@ -39,13 +39,25 @@
                     <div class="mostrador" *ngFor="let product of filteredProducts">
                         <div class="item">
                             <div class="contenedor-foto">
-                                <img src="../../../../assets/img/imag.png" alt="">
+                                <img src="{{product.imagen}}" alt="">
                             </div>
                             <p class="descripcion">{{ product.nombreProducto }}</p>
-                            <span class="precio">${{ product.precioVenta }}</span>
+                            <p class="precio">${{ product.precioVenta }}</p>
+
+                            <p-button icon="pi pi-cart-plus" label="Agregar al carrito"
+                                styleClass="p-button-outlined p-button-warning"
+                                (click)="addCarrito(product.pkProducto)"> </p-button>
+                            <div>
+
+                                <br>
+                            </div>
+                            <p-button icon="pi pi-info-circle" label="Ver detalles"
+                                styleClass="p-button-outlined p-button-help" (click)="verProducto(product.pkProducto)">
+                            </p-button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
