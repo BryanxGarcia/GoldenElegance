@@ -1,6 +1,5 @@
 ﻿using GoldenEleganceProyecto.Models;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
 
 namespace GoldenEleganceProyecto.Context
 {
@@ -22,6 +21,7 @@ namespace GoldenEleganceProyecto.Context
             builder.Entity<Categoria>().HasQueryFilter(x => !x.IsDeleted);
             builder.Entity<Productos>().HasQueryFilter(x => !x.IsDeleted);
             builder.Entity<Venta>().HasQueryFilter(x => !x.IsDeleted);
+            builder.Entity<Favoritos>().HasQueryFilter(x => !x.IsDeleted);
 
         }
     }

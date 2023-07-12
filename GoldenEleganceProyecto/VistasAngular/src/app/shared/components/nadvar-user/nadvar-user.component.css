@@ -30,6 +30,12 @@ li {
     transition: ease-in-out .4s;
 }
 
+i:hover{
+    cursor: pointer;
+}
+h1:hover{
+    cursor: pointer;
+}
 .navi h1 {
     text-transform: uppercase;
     color: white;

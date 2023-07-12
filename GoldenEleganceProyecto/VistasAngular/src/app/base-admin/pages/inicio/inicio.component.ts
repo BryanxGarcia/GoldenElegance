@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { ICategoria } from 'src/app/models/ICategoria.interface';
 import { IProductos } from 'src/app/models/IProductos.interface.';
 import { CategoriaService } from 'src/app/services/categoria/categoria.service';
@@ -10,7 +11,7 @@ import { ProductsService } from 'src/app/services/productsService/products.servi
   styleUrls: ['./inicio.component.css']
 })
 export class InicioComponent implements OnInit {
-  constructor(private _productsService: ProductsService, private catServicio: CategoriaService) { }
+  constructor(private _productsService: ProductsService, private router: Router,  private catServicio: CategoriaService) { }
   Categorias: ICategoria[]=[];
   productos: IProductos[] = [];
   priceMin= 0;
@@ -61,6 +62,12 @@ export class InicioComponent implements OnInit {
       this.productos = data;
       this.filteredProducts = data;
     })
+  }
+  verProducto(id: number) {
+    this.router.navigate(['/base/ficha/', id]);
+  }
+  addCarrito(id:number){
+    console.log(id)
   }
   obtenerCategorias() {
     this.catServicio.listarCategorias().subscribe(

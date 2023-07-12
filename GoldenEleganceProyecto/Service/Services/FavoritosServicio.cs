@@ -18,15 +18,24 @@ namespace GoldenEleganceProyecto.Service.Services
             _context = context;
         }
         //Agrega Un Producto A favoritos del Usuario
-        public async Task<ResponseHelper> AgregarFavorito(Favoritos vm)
+        public async Task<ResponseHelper> AgregarFavorito(FavoritosDTO favoritoDTO)
         {
             ResponseHelper response = new ResponseHelper();
             try
             {
-                if (vm.FKUsuario > 0) {
+                var usuario = await _context.Usuario.Where(x => x.Username == favoritoDTO.Usuario).FirstOrDefaultAsync();
 
-                    if (vm.FKProducto > 0) {
-                        await _context.AddAsync(vm);
+                if (usuario.PkUsuario > 0) {
+
+                    if (favoritoDTO.FkProducto > 0) {
+                        Favoritos fav = new();
+                        fav.FKProducto = favoritoDTO.FkProducto;
+                        fav.FKUsuario = usuario.PkUsuario;
+                        fav.IsDeleted = false;
+                        fav.RowVersion = DateTime.Now;
+
+
+                        await _context.Favoritos.AddAsync(fav);
                         await _context.SaveChangesAsync();
 
                         response.Message = "EL producto se ha agregado a favoritos";
@@ -55,15 +64,18 @@ namespace GoldenEleganceProyecto.Service.Services
             return response;
         }
         //Elimina EL producto de favoritos del Usuario
-        public async Task<ResponseHelper> EliminarFavorito(int? Id)
+        public async Task<ResponseHelper> EliminarFavorito(FavoritosDTO favoritoDTO)
         {
-            ResponseHelper response = new ResponseHelper();
+            ResponseHelper response = new();
             try
             {
-                if ( Id > 0)
+                var usuario = await _context.Usuario.Where(x => x.Username == favoritoDTO.Usuario).FirstOrDefaultAsync();
+
+                if ( favoritoDTO.FkProducto > 0 && usuario.PkUsuario>0)
                 {
-                    Favoritos modeloFavorito = new Favoritos();
-                    modeloFavorito = await _context.Favoritos.FindAsync(Id);
+                    Favoritos modeloFavorito = new();
+
+                    modeloFavorito = await _context.Favoritos.Where(x => x.FKProducto == favoritoDTO.FkProducto && x.FKUsuario == usuario.PkUsuario).FirstOrDefaultAsync();
                      _context.Favoritos.Remove(modeloFavorito);
                     await _context.SaveChangesAsync();
 
@@ -85,12 +97,21 @@ namespace GoldenEleganceProyecto.Service.Services
             return response;
         }
         //En Lista Los Productos favoritos de un usuario
-        public async Task<List<Favoritos>> ObtenerLista(int? Id)
+        public async Task<List<Productos>> ObtenerLista(string Username)
         {
-            List<Favoritos> lista = new List<Favoritos>();
+            List<Productos> lista = new();
             try
             {
-                 lista = (from consulta in _context.Favoritos where consulta.FKUsuario == Id select consulta).Include(x=> x.Producto).ToList();
+                var usuario = await _context.Usuario.Where(x => x.Username == Username).FirstOrDefaultAsync();
+
+                var favoritos = await _context.Favoritos.Where(x => x.FKUsuario == usuario.PkUsuario).ToListAsync();
+                
+                foreach (var favorito in favoritos) {
+
+                    var producto = await _context.Productos.Where(x => x.PkProducto == favorito.FKProducto).FirstOrDefaultAsync();
+
+                    lista.Add(producto);
+                }
             }
             catch (Exception error)
             {
@@ -98,6 +119,33 @@ namespace GoldenEleganceProyecto.Service.Services
             }
 
             return  lista;
+        }
+
+        public async Task<ResponseHelper> ExisteEnFavoritos(FavoritosDTO favoritoDTO)
+        {
+            ResponseHelper response = new();
+            try
+            {
+                var usuario = await _context.Usuario.Where(x=> x.Username == favoritoDTO.Usuario).FirstOrDefaultAsync();
+                var respuesta = await _context.Favoritos.AnyAsync(u => u.FKProducto == favoritoDTO.FkProducto && u.FKUsuario == usuario.PkUsuario);
+                if (respuesta)
+                {
+                    response.Success = true;
+                    response.Message = "Si existe favorito";
+                }
+                else
+                {
+                    response.Success = false;
+                    response.Message = "No existe ese favorito";
+
+                }
+            }
+            catch (Exception error)
+            {
+                _logger.LogError(error.Message);
+            }
+
+            return response;
         }
     }
 }

@@ -32,6 +32,7 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { ToastModule } from 'primeng/toast';
 import { MessagesModule } from 'primeng/messages';
 import { SliderModule } from 'primeng/slider';
+import { SiderbarUserComponent } from '../shared/components/siderbar/siderbar-user/siderbar-user.component';
 @NgModule({
   declarations: [
     CarritoCompraComponent,
@@ -54,7 +55,9 @@ import { SliderModule } from 'primeng/slider';
     ListarCategoriaComponent,
     EditarCategoriaComponent,
     DashboardNavigatorComponent,
-    NadvarUserComponent
+    NadvarUserComponent,
+    SiderbarUserComponent  
+
   ],
   imports: [
     CommonModule,

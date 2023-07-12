@@ -5,8 +5,10 @@ namespace GoldenEleganceProyecto.Service.IServices
 {
     public interface IFavoritosServicio
     {
-        Task<List<Favoritos>> ObtenerLista(int? Id);
-        Task<ResponseHelper> AgregarFavorito(Favoritos vm);
-        Task<ResponseHelper> EliminarFavorito(int? Id);
+        Task<List<Productos>> ObtenerLista(string Username);
+        Task<ResponseHelper> ExisteEnFavoritos(FavoritosDTO favoritoDTO);
+
+        Task<ResponseHelper> AgregarFavorito(FavoritosDTO favoritoDTO);
+        Task<ResponseHelper> EliminarFavorito(FavoritosDTO favoritos);
     }
 }

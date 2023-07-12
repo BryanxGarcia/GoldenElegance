@@ -11,7 +11,7 @@ import { NotFoundComponent } from './shared/components/not-found/not-found.compo
 @NgModule({
   declarations: [
     AppComponent,
-    NotFoundComponent,     
+    NotFoundComponent
     ],
   imports: [
     BrowserModule,
