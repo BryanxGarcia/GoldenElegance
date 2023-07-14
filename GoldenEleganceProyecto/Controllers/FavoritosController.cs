@@ -20,8 +20,8 @@ namespace GoldenEleganceProyecto.Controllers
         /// Metodo que nos sirve para obtener una lista de los favoritos por usuario registradas en la base de datos.
         /// </summary>
         /// <returns>Lista de Favoritos</returns>
-        [HttpGet]
-        [Route("favoritos/{Username}")]
+        [HttpPost]
+        [Route("favoritos")]
         public async Task<IActionResult> ObtenerListaPorUsuario(FavoritosDTO favoritoDTO)
         {
             ResponseHelper response = new ResponseHelper();

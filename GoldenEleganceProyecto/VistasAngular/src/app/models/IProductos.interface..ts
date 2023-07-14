@@ -5,5 +5,7 @@ export interface IProductos{
     fkCategoria: number,
     precioVenta: number,
     inventario: number,
-    imagen: string
+    imagen: string,
+    cantidad?: number;
+    precioCantidad?: number;
 }

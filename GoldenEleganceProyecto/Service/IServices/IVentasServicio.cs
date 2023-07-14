@@ -10,5 +10,6 @@ namespace GoldenEleganceProyecto.Service.IServices
         Task<ResponseHelper> CrearVenta(Venta vm);
         Task<ResponseHelper> EditarVenta(Venta vm);
         Task<ResponseHelper> EliminarVenta(int? Id);
+        Task<ResponseHelper> CrearVentasMasiva(List<Productos> productos, string username);
     }
 }

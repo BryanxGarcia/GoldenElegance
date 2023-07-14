@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BaseAdminRoutingModule } from './base-admin-routing.module';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CarritoCompraComponent } from './pages/carrito-compra/carrito-compra.component';
 import { FavoritosComponent } from './pages/favoritos/favoritos.component';
 import { FichaProductoComponent } from './pages/ficha-producto/ficha-producto.component';
@@ -33,6 +33,8 @@ import { ToastModule } from 'primeng/toast';
 import { MessagesModule } from 'primeng/messages';
 import { SliderModule } from 'primeng/slider';
 import { SiderbarUserComponent } from '../shared/components/siderbar/siderbar-user/siderbar-user.component';
+import { NgxPayPalModule } from 'ngx-paypal';
+
 @NgModule({
   declarations: [
     CarritoCompraComponent,
@@ -71,7 +73,9 @@ import { SiderbarUserComponent } from '../shared/components/siderbar/siderbar-us
     InputTextareaModule,
     InputNumberModule,
     MessagesModule,
-    SliderModule
+    SliderModule,
+    FormsModule,
+    NgxPayPalModule
   ]
 })
 export class BaseAdminModule { }

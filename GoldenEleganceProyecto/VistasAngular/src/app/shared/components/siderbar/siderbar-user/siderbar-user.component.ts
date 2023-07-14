@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-siderbar-user',
@@ -6,5 +7,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./siderbar-user.component.css']
 })
 export class SiderbarUserComponent {
+  constructor(private auth: AuthService) { }
 
+  logout() {
+    this.auth.signOut();
+  }
 }
