@@ -18,7 +18,7 @@ import { NotFoundComponent } from './shared/components/not-found/not-found.compo
     AppRoutingModule,
     HttpClientModule,
     ReactiveFormsModule,
-    BrowserAnimationsModule,
+    BrowserAnimationsModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

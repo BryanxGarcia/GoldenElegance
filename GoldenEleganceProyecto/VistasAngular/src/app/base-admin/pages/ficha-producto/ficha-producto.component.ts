@@ -4,6 +4,7 @@ import { ICategoria } from 'src/app/models/ICategoria.interface';
 import { IFavorito } from 'src/app/models/IFavoritoExiste.interface';
 import { IProductos } from 'src/app/models/IProductos.interface.';
 import { AuthService } from 'src/app/services/auth.service';
+import { CarritoService } from 'src/app/services/carritoService/carrito.service';
 import { CategoriaService } from 'src/app/services/categoria/categoria.service';
 import { FavoritosService } from 'src/app/services/favoritosService/favoritos.service';
 import { ProductsService } from 'src/app/services/productsService/products.service';
@@ -35,7 +36,8 @@ export class FichaProductoComponent implements OnInit {
     public productosService: ProductsService,
     private catServicio: CategoriaService,
     public favoritoService: FavoritosService,
-    private userService: AuthService) { }
+    private userService: AuthService,
+    private carritoService:CarritoService) { }
   ngOnInit() {
     this.route.params.subscribe(params => {
       this.id = params['id'];
@@ -87,5 +89,8 @@ export class FichaProductoComponent implements OnInit {
   }
   eliminarFavorito(){
     this.favoritoService.eliminarFavorito(this.Favorito);
+  }
+  addCarrito(producto: IProductos) {
+    this.carritoService.agregarProducto(producto);
   }
 }

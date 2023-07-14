@@ -1,1 +1,44 @@
-<p>carrito-compra works!</p>
+<app-nadvar-user></app-nadvar-user>
+<div class="container">
+    <div>
+        <h2>Productos en el carrito</h2>
+        <div class="productos">
+            <div class="listado">
+                <div *ngFor="let producto of productos">
+                    <div class="items">
+                        <div class="contenedor-foto">
+                            <img src="{{producto.imagen}}" alt="">
+                        </div>
+                        <div class="alinear">
+                            <h3>{{ producto.nombreProducto }}</h3>
+                            <a (click)="eliminarProducto(producto)">Eliminar</a>
+                        </div>
+                        <div class="alinear">
+                            <div class="cantidad">
+                                <a (click)="decrementarCantidad(producto)">--</a>
+                                <a>{{ producto.cantidad }}</a>
+                                <a (click)="incrementarCantidad(producto)">+</a>
+                            </div>
+                        </div>
+                        <div class="alinear">
+                            <p>$ {{ producto.precioCantidad }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div style="padding-top: 17%;">
+        <div class="pago">
+            <h3 style="display: grid; justify-content: center;">Resumen de compra</h3>
+            <p>Total de productos: {{ obtenerTotalProductos() }}</p>
+            <p>Precio total a pagar: ${{ obtenerPrecioTotal() }}</p>
+            <div style="display: grid; justify-content: center;">
+                <p-button icon="pi pi-paypal" label="Proceder a pagar" styleClass="p-button-raised p-button-info"
+                    (click)="realizarCompra()" *ngIf="!showPaypalButtons"></p-button>
+            </div>
+            <ngx-paypal *ngIf="showPaypalButtons" [config]="payPalConfig">
+            </ngx-paypal>
+        </div>
+    </div>
+</div>
