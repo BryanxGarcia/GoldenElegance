@@ -10,7 +10,7 @@ import { UserStoreService } from 'src/app/services/Usuarios/user-store.service';
   styleUrls: ['./editar-usuario.component.css']
 })
 export class EditarUsuarioComponent implements OnInit {
-  id= 0;
+  id = 0;
   Usuario: IUsuario = {
     PkUsuario: 0,
     nombre: '',
@@ -24,12 +24,11 @@ export class EditarUsuarioComponent implements OnInit {
     direccion: '',
     fkRol: 0,
   };
-  constructor(public router: Router,public route: ActivatedRoute, public user:UserStoreService, private fb: FormBuilder) { }
+  constructor(public router: Router, public route: ActivatedRoute, public user: UserStoreService, private fb: FormBuilder) { }
   editForm: FormGroup = this.fb.group({
     Nombre: ['', Validators.required],
     Username: ['', Validators.required],
     Correo: ['', Validators.required],
-    Password: ['', Validators.required],
     Apellido: ['', Validators.required],
     Telefono: ['', Validators.required],
     Direccion: ['', Validators.required],
@@ -39,13 +38,13 @@ export class EditarUsuarioComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.id = parseInt(params['id']);
     });
-    if(!this.id){
+    if (!this.id) {
       this.router.navigate(['base/NotFound']);
     }
     this.obtenerUsuario();
   }
 
-  obtenerUsuario(){
+  obtenerUsuario() {
     this.user.buscarPorId(this.id).subscribe(
       (response) => {
         this.Usuario = response;
@@ -58,26 +57,29 @@ export class EditarUsuarioComponent implements OnInit {
           Direccion: this.Usuario.direccion,
           FKRol: this.Usuario.fkRol
         });
-      
+
       },
       (error) => {
         console.error('Error al obtener productos:', error);
       }
     );
   }
-   guardarUsuario(){
+  guardarUsuario() {
     if (this.editForm.valid) {
-    this.Usuario.nombre= this.editForm.controls['Nombre'].value;
-    this.Usuario.username= this.editForm.controls['Username'].value;
-    this.Usuario.correo= this.editForm.controls['Correo'].value;
-    this.Usuario.apellido= this.editForm.controls['Apellido'].value;
-    this.Usuario.telefono= this.editForm.controls['Telefono'].value;
-    this.Usuario.direccion= this.editForm.controls['Direccion'].value;
-    this.Usuario.fkRol= this.editForm.controls['FKRol'].value;
-
-    console.log(this.Usuario)
-    this.user.editarUsuario(this.Usuario);
-  }
+      this.Usuario.nombre = this.editForm.controls['Nombre'].value;
+      this.Usuario.username = this.editForm.controls['Username'].value;
+      this.Usuario.correo = this.editForm.controls['Correo'].value;
+      this.Usuario.apellido = this.editForm.controls['Apellido'].value;
+      this.Usuario.telefono = this.editForm.controls['Telefono'].value;
+      this.Usuario.direccion = this.editForm.controls['Direccion'].value;
+      this.Usuario.fkRol = this.editForm.controls['FKRol'].value;
+      const x = this.user.editarUsuario(this.Usuario);
+      if(x){
+        setTimeout(() => {
+          this.router.navigate(['base/usuarios']);
+        }, 2000);
+      }
+    }
   }
 
 }

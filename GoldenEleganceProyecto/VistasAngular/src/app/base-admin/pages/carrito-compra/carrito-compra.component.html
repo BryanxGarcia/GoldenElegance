@@ -11,13 +11,19 @@
                         </div>
                         <div class="alinear">
                             <h3>{{ producto.nombreProducto }}</h3>
-                            <a (click)="eliminarProducto(producto)">Eliminar</a>
+                            <p-button icon="pi pi-cart-plus" label="Eliminar"
+                                styleClass="p-button-outlined p-button-danger"
+                                (click)="eliminarProducto(producto)"></p-button>
                         </div>
                         <div class="alinear">
                             <div class="cantidad">
-                                <a (click)="decrementarCantidad(producto)">--</a>
+                                <p-button icon="pi pi-minus"
+                                    styleClass="p-button-secondary p-button-text"
+                                    (click)="decrementarCantidad(producto)"></p-button>
                                 <a>{{ producto.cantidad }}</a>
-                                <a (click)="incrementarCantidad(producto)">+</a>
+                                <p-button icon="pi pi-plus" 
+                                    styleClass="p-button-secondary p-button-text"
+                                    (click)="incrementarCantidad(producto)"></p-button>
                             </div>
                         </div>
                         <div class="alinear">

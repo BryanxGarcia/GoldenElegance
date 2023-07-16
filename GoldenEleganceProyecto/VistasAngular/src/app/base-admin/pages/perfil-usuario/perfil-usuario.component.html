@@ -1,5 +1,69 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+
+
 <app-nadvar-user></app-nadvar-user>
 
 <div class="col-3">
     <app-siderbar-user></app-siderbar-user>
+</div>
+<div class="container">
+    <div class="conts">
+        <div class="card">
+            <div class="card-header">
+                <h2>Editar mi perfil</h2>
+                <p-button icon="pi pi-check" styleClass="p-button-rounded p-button-success"
+                    (click)="guardarUsuario()"></p-button>
+            </div>
+            <div class="card-header">
+                <form class="form" [formGroup]="editForm">
+                    <div class="row col-xs-12">
+                        <div class="col-xs-6">
+                            <label for="name">Nombre</label>
+                            <input type="text" formControlName="Nombre" class="form-control-full"
+                                placeholder="Ingrese su nombre" />
+                        </div>
+                        <div class="col-xs-6">
+                            <div class="form-group">
+                                <label for="apellido">Apellido</label>
+                                <input type="text" formControlName="Apellido" class="form-control-full"
+                                    placeholder="Ingrese su apellido" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12">
+                        <div class="form-group">
+
+                            <label for="username">Username</label>
+                            <input type="text" formControlName="Username" class="form-control"
+                                placeholder="Ingrese su username" />
+                        </div>
+                    </div>
+                    <div class="col-xs-12">
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" formControlName="Correo" class="form-control"
+                                placeholder="Ingrese su email" />
+                        </div>
+                    </div>
+
+                    <div class="col-xs-12">
+                        <div class="form-group">
+                            <label for="telefono">Telefono</label>
+                            <input type="text" formControlName="Telefono" class="form-control"
+                                placeholder="Ingrese su telefono" />
+                        </div>
+                    </div>
+                    <div class="col-xs-12">
+                        <div class="form-group">
+                            <label for="direccion">Dirección</label>
+                            <input type="text" formControlName="Direccion" class="form-control"
+                                placeholder="Ingrese su direccion" />
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>

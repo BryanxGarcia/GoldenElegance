@@ -69,8 +69,9 @@
   align-items: stretch;
   display: flex;
   justify-content: center;
+  align-items: center;
 }
-.cantidad a {
+.cantidad button {
   font-size: 26px;
   color: black;
   justify-content: center;
@@ -83,8 +84,8 @@
   justify-content: center;
 }
 a {
-  color: red;
-  font-size: small;
+  color: black;
+  font-size: medium;
 }
 
 a:hover {

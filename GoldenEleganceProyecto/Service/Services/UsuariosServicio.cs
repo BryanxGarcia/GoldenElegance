@@ -218,6 +218,21 @@ namespace GoldenEleganceProyecto.Service.Services
             }
             return modeloUsuario;
         }
+        public async Task<Usuarios> ObtenerPorUsername(string username)
+        {
+            Usuarios usuario = new Usuarios();
+
+            try
+            {
+                 usuario = await _context.Usuario.Where(x => x.Username == username).FirstOrDefaultAsync();
+
+            }
+            catch (Exception error)
+            {
+                _logger.LogError(error.Message);
+            }
+            return usuario;
+        }
         private async Task<bool> CheckUsernameExist(string username)
         {
             return await _context.Usuario.AnyAsync(u => u.Username == username);

@@ -57,6 +57,28 @@ namespace GoldenEleganceProyecto.Controllers
             return Ok(modelo);
         }
 
+
+        /// <summary>
+        /// Metodo que nos sirve para obtener un usuario de acuerdo al Id proporcionado.
+        /// </summary>
+        /// <param name="username"></param>
+        /// <returns>producto</returns>
+        [HttpGet]
+        [Route("usuarioporusername/{username}")]
+        public async Task<IActionResult> ObtenerPorUsername(string username)
+        {
+            ResponseHelper response = new ResponseHelper();
+
+            if (username == null || username == "")
+            {
+                response.Success = false;
+                response.Message = "No hay usuarios con ese username";
+                return BadRequest(response);
+            }
+            var modelo = await _usuariosServicio.ObtenerPorUsername(username);
+            return Ok(modelo);
+        }
+
         /// <summary>
         /// Metodo que nos sirve para crear un nuevo usuario
         /// </summary>

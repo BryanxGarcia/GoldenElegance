@@ -5,8 +5,8 @@
       <img
         src="https://1.bp.blogspot.com/-vhmWFWO2r8U/YLjr2A57toI/AAAAAAAACO4/0GBonlEZPmAiQW4uvkCTm5LvlJVd_-l_wCNcBGAsYHQ/s16000/team-1-2.jpg"
         alt="profile_picture">
-      <h3>Anamika Roy</h3>
-      <p>Designer</p>
+      <h3>{{usuario}}</h3>
+      <p>Administrador</p>
     </div>
     <div>
       <ul>
@@ -46,12 +46,11 @@
             <span class="item">Ventas</span>
           </a>
         </li>
-        <li>
-          <a (click)="logout()" >
-            <span class="icon"><i class="fas fa-chart-line"></i></span>
-            <span class="item">Cerrar sesión</span>
-          </a>
-        </li>
+        <li style="display: flex; justify-content: center; padding-top: 20%;">
+          <p-button icon="pi pi-sign-out" styleClass="p-button-outlined p-button-danger" label="Cerrar sesion" (click)="logout()"
+              (keypress)="logout()">
+          </p-button>
+      </li>
       </ul>
     </div>
   </div>
