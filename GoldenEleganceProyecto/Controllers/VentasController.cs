@@ -33,7 +33,20 @@ namespace GoldenEleganceProyecto.Controllers
         }
 
         /// <summary>
-        /// Metodo que nos sirve para crear un nuevo producto
+        /// Metodo que nos sirve para obtener una lista de las ventas registradas en la base de datos de acuerdo a un usuario.
+        /// </summary>
+        /// <returns>Lista de ventas</returns>
+        [HttpGet]
+        [Route("historial/{username}")]
+        public async Task<IActionResult> ObtenerListaPorUsuario(string username)
+        {
+            var list = await _ventasServicio.ObtenerPorId(username);
+
+            return Ok(list);
+        }
+
+        /// <summary>
+        /// Metodo que nos sirve para crear una nueva venta
         /// </summary>
         /// <param name="vmProducto"></param>
         /// <returns>ResponseHelper</returns>

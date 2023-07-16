@@ -133,9 +133,7 @@ export class UserStoreService {
             showConfirmButton: false,
             timer: 1500,
           });
-          setTimeout(() => {
-            this.router.navigate(['base/usuarios']);
-          }, 2000);
+
         } else {
           Swal.fire({
             position: 'top-end',
@@ -151,6 +149,10 @@ export class UserStoreService {
 
   buscarPorId(id: number){
     return this.http.get<IUsuario>(`${this.baseUrl}${this.controller}/usuario/${id}`);
+  }
+  buscarPorUsername(username: string){
+    console.log(username)
+    return this.http.get<IUsuario>(`${this.baseUrl}${this.controller}/usuarioporusername/${username}`);
   }
 
   public getRoleFromStore() {

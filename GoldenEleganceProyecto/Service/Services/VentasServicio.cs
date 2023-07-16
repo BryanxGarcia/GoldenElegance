@@ -57,16 +57,6 @@ namespace GoldenEleganceProyecto.Service.Services
             
         }
 
-        public Task<ResponseHelper> EditarVenta(Venta vm)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<ResponseHelper> EliminarVenta(int? Id)
-        {
-            throw new NotImplementedException();
-        }
-
         public async Task<List<Venta>> ObtenerLista()
         {
             List<Venta> lista = new();
@@ -75,9 +65,15 @@ namespace GoldenEleganceProyecto.Service.Services
             return lista;
         }
 
-        public Task<Venta> ObtenerPorId(int? Id)
+        public async Task<List<Venta>> ObtenerPorId(string username)
         {
-            throw new NotImplementedException();
+            var usuario = await _context.Usuario.Where(x => x.Username == username).FirstOrDefaultAsync();
+
+            List<Venta> lista = new();
+
+            lista = await _context.Ventas.Where(x => x.FKUsuario == usuario.PkUsuario).Include(u => u.Producto).ToListAsync();
+
+            return lista;
         }
     }
 }

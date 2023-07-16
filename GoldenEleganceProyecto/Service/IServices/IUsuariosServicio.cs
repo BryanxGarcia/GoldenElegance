@@ -15,6 +15,8 @@ namespace GoldenEleganceProyecto.Service.IServices
     {
         Task<List<Usuarios>> ObtenerLista();
         Task<Usuarios> ObtenerPorId(int? Id);
+        Task<Usuarios> ObtenerPorUsername(string username);
+
         Task<ResponseHelper> CrearUsuario(Usuarios vm);
         Task<ResponseHelper> EditarUsuario(Usuarios vm);
         Task<ResponseHelper> EliminarUsuario(int? Id);

@@ -11,7 +11,7 @@ import Swal from 'sweetalert2';
   styleUrls: ['./carrito-compra.component.css']
 })
 export class CarritoCompraComponent implements OnInit {
-  showPaypalButtons: boolean = false;
+  showPaypalButtons = false;
   productos: IProductos[] = [];
   total = 0;
   usuario = "";
@@ -42,7 +42,7 @@ export class CarritoCompraComponent implements OnInit {
     this.payPalConfig = {
       currency: 'MXN',
       clientId: environment.clientIDPayPal,
-      createOrderOnClient: (data) => <ICreateOrderRequest><unknown>{
+      createOrderOnClient: () => <ICreateOrderRequest><unknown>{
         intent: 'CAPTURE',
         purchase_units: [{
           amount: {
@@ -68,8 +68,8 @@ export class CarritoCompraComponent implements OnInit {
       },
       onApprove: (data, actions) => {
         console.log('onApprove - transaction was approved, but not authorized', data, actions);
-        actions.order.get().then((details: any) => {
-          console.log('onApprove - you can get full order details inside onApprove: ', details);
+        actions.order.get().then(() => {
+          console.log('onApprove - you can get full order details inside onApprove: ');
           this.enviarDatos();
           this.vaciarCarrito();
         });
@@ -111,7 +111,9 @@ export class CarritoCompraComponent implements OnInit {
     this.showPaypalButtons = true;
   }
   actualizarCantidad(producto: IProductos) {
-    producto.cantidad = Math.max(0, producto.cantidad!); // Asegurar que la cantidad no sea negativa
+    if (producto.cantidad != null) {
+    producto.cantidad = Math.max(0, producto.cantidad);
+    } // Asegurar que la cantidad no sea negativa
     this.carritoService.guardarCarrito(); // Guardar el carrito actualizado en el localStorage
   }
   incrementarCantidad(producto: IProductos) {
@@ -121,10 +123,12 @@ export class CarritoCompraComponent implements OnInit {
   }
 
   decrementarCantidad(producto: IProductos) {
-    if (producto.cantidad! > 1) {
-      producto.cantidad = (producto.cantidad || 1) - 1;
-      producto.precioCantidad = (producto.precioVenta * producto.cantidad)
-      this.carritoService.guardarCarrito(); // Guardar el carrito actualizado en el localStorage
+    if (producto.cantidad != null) {
+      if (producto.cantidad > 1) {
+        producto.cantidad = (producto.cantidad || 1) - 1;
+        producto.precioCantidad = (producto.precioVenta * producto.cantidad)
+        this.carritoService.guardarCarrito(); // Guardar el carrito actualizado en el localStorage
+      }
     }
   }
   enviarDatos(): void {
@@ -132,13 +136,14 @@ export class CarritoCompraComponent implements OnInit {
     const username = this.usuario;
     this.carritoService.enviarProductos(username, productos).subscribe(
       response => {
+        console.log(response);
         Swal.fire({
           position: 'top-end',
           icon: 'success',
           title: 'Se realizo la compra correctamente',
           showConfirmButton: false,
           timer: 1500,
-        });        setTimeout(() => {
+        }); setTimeout(() => {
           location.reload(); // Recargar la página después de 2 minutos
         }, 500);
       },

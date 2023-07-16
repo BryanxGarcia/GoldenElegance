@@ -1,6 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
 import { IProductos } from 'src/app/models/IProductos.interface.';
 import { environment } from 'src/environments/environment';
 
@@ -14,7 +13,6 @@ export class CarritoService {
   productos: IProductos[] = [];
 
   constructor(private http: HttpClient) { 
-
     this.cargarCarrito();
   }
 
@@ -30,7 +28,7 @@ export class CarritoService {
     this.guardarCarrito();
   }
   
-  enviarProductos(username: string, productos: IProductos[]): Observable<any> {
+  enviarProductos(username: string, productos: IProductos[]) {
     console.log(productos);
     const url = `${this.baseUrl}${this.controller}/crearVentasMasivas`; // Reemplaza con la ruta de tu API para enviar los productos y el ID del usuario
     const payload = {

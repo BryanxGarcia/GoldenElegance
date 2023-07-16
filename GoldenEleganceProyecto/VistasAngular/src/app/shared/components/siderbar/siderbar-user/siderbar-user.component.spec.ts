@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SiderbarUserComponent } from './siderbar-user.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 describe('SiderbarUserComponent', () => {
   let component: SiderbarUserComponent;
@@ -10,7 +11,8 @@ describe('SiderbarUserComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [SiderbarUserComponent],
-      imports: [HttpClientTestingModule]
+      imports: [HttpClientTestingModule],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
 
     });
     fixture = TestBed.createComponent(SiderbarUserComponent);

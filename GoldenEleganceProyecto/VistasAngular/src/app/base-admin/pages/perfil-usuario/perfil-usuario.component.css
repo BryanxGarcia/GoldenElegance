@@ -1,0 +1,92 @@
+.col-9 {
+  flex-basis: 78%;
+}
+.col-3 {
+  flex-basis: 20%;
+}
+/* .row {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  justify-content: space-evenly
+} */
+.container {
+  padding-top: 3%;
+  display: flex;
+  font-family: sans-serif;
+}
+.conts {
+  flex: 1;
+  margin-left: 21%;
+  margin-right: 1%;
+  margin-top: 5%;
+  background-color: #ffffff;
+}
+
+.card {
+  position: relative;
+  margin: 0 auto;
+  background-color: #ffffff;
+  border-radius: 8px;
+  padding: 20px;
+  width: 100%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.form-control-full {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  width: 100%;
+}
+
+.card-body {
+  position: relative;
+  width: 100%;
+
+}
+
+.form {
+  margin-top: 24px;
+  width: 100%;
+
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+.form-group-row {
+  display: flex;
+  width: 1000px;
+}
+
+.form-group:last-child {
+  margin-right: 0;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.form-control {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+}

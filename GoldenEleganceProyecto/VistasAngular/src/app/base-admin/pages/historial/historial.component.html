@@ -1,1 +1,27 @@
-<p>historial works!</p>
+<app-nadvar-user></app-nadvar-user>
+
+<div class="inicio">
+    <div class="row">
+        <div class="col-3">
+            <app-siderbar-user></app-siderbar-user>
+        </div>
+        <div class="col-9">
+            <div class="container">
+                <h2>Historial de productos comprados</h2>
+                <hr style="width: 100%;">
+                <div class="row">
+                    <div class="mostrador" *ngFor="let product of Historial">
+                        <div class="item">
+                            <div class="contenedor-foto">
+                                <img src="{{product.producto.imagen}}" alt="">
+                            </div>
+                            <p class="descripcion">{{ product.producto.nombreProducto }}</p>
+                            <p class="precio">${{ product.producto.precioVenta }}</p>
+                            <p class="descripcion">{{ product.fechaVenta }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DashboardNavigatorComponent } from './dashboard-navigator.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 describe('DashboardNavigatorComponent', () => {
   let component: DashboardNavigatorComponent;
@@ -10,7 +11,8 @@ describe('DashboardNavigatorComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [DashboardNavigatorComponent],
-      imports: [HttpClientTestingModule]
+      imports: [HttpClientTestingModule],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
 
     });
     fixture = TestBed.createComponent(DashboardNavigatorComponent);

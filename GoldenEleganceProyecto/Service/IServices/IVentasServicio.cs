@@ -6,10 +6,8 @@ namespace GoldenEleganceProyecto.Service.IServices
     public interface IVentasServicio
     {
         Task<List<Venta>> ObtenerLista();
-        Task<Venta> ObtenerPorId(int? Id);
+        Task<List<Venta>> ObtenerPorId(string username);
         Task<ResponseHelper> CrearVenta(Venta vm);
-        Task<ResponseHelper> EditarVenta(Venta vm);
-        Task<ResponseHelper> EliminarVenta(int? Id);
         Task<ResponseHelper> CrearVentasMasiva(List<Productos> productos, string username);
     }
 }
